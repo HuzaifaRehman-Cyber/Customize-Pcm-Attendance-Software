@@ -1687,8 +1687,11 @@
     };
     
     // Initialize
-    loadUserData();
-    checkRememberMe();
+loadUserData();
+// Wait for everything to load before checking remember me (Fixes GitHub Pages iFrame issue)
+window.addEventListener('load', function() {
+    setTimeout(checkRememberMe, 100);
+});
     
     document.querySelector('.user-avatar')?.addEventListener('click', showProfile);
 </script>
