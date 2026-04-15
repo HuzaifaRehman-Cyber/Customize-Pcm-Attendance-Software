@@ -1,12 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <title>PCM Electrical Systems | Enterprise Intelligence Suite</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
     <style>
@@ -494,6 +492,7 @@
         </div>
         <button class="btn-modern btn-primary-modern" onclick="attemptLogin()" style="width:100%; justify-content: center;"><i class="fas fa-sign-in-alt"></i> Login</button>
         <div style="text-align: center; margin-top: 16px; font-size: 0.75rem; color: var(--gray-500);">
+            Default: admin / Admin@123
         </div>
     </div>
 </div>
@@ -619,25 +618,6 @@
 </div>
 
 <script>
-// Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
-
-// Your web app's Firebase configuration
-const firebaseConfig = {
-  apiKey: "AIzaSyBT4DInOtZ-HKTH0mcMn9yXktcIz0mpLtc",
-  authDomain: "pcm-attendance-system.firebaseapp.com",
-  projectId: "pcm-attendance-system",
-  storageBucket: "pcm-attendance-system.firebasestorage.app",
-  messagingSenderId: "1081621674383",
-  appId: "1:1081621674383:web:c3bf3f64e6471c1091f3fa"
-};
-
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-
-    
     // ==================== USER MANAGEMENT SYSTEM ====================
     // Data structures
     let users = [];
@@ -1707,17 +1687,11 @@ const app = initializeApp(firebaseConfig);
         if(id === 'audit') filterAudit();
     };
     
-// Initialize
-loadUserData();
-
-// Wait for everything to load before checking remember me (Fixes GitHub Pages issue)
-window.addEventListener('load', function() {
-    setTimeout(function() {
-        checkRememberMe();
-    }, 100);
-});
-
-document.querySelector('.user-avatar')?.addEventListener('click', showProfile);
+    // Initialize
+    loadUserData();
+    checkRememberMe();
+    
+    document.querySelector('.user-avatar')?.addEventListener('click', showProfile);
 </script>
 
 <!-- Override to keep original functions -->
@@ -2324,7 +2298,6 @@ document.querySelector('.user-avatar')?.addEventListener('click', showProfile);
     }
     
     loadWorkingDays();
-    
-</script>   
+</script>
 </body>
 </html>
