@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <title>PCM Electrical Systems | Enterprise Intelligence Suite</title>
@@ -617,14 +619,23 @@
 </div>
 
 <script>
-    const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_PROJECT.firebaseapp.com",
-  projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_PROJECT.appspot.com",
-  messagingSenderId: "YOUR_SENDER_ID",
-  appId: "YOUR_APP_ID"
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+// Your web app's Firebase configuration
+const firebaseConfig = {
+  apiKey: "AIzaSyBT4DInOtZ-HKTH0mcMn9yXktcIz0mpLtc",
+  authDomain: "pcm-attendance-system.firebaseapp.com",
+  projectId: "pcm-attendance-system",
+  storageBucket: "pcm-attendance-system.firebasestorage.app",
+  messagingSenderId: "1081621674383",
+  appId: "1:1081621674383:web:c3bf3f64e6471c1091f3fa"
 };
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
 
     
     // ==================== USER MANAGEMENT SYSTEM ====================
@@ -2313,8 +2324,7 @@ document.querySelector('.user-avatar')?.addEventListener('click', showProfile);
     }
     
     loadWorkingDays();
-</script>
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js"></script>    
+    
+</script>   
 </body>
 </html>
