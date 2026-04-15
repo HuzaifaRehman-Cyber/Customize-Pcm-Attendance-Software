@@ -1,10 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
-        
 <head>
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
-<meta charset="UTF-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <title>PCM Electrical Systems | Enterprise Intelligence Suite</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
@@ -495,6 +492,7 @@
         </div>
         <button class="btn-modern btn-primary-modern" onclick="attemptLogin()" style="width:100%; justify-content: center;"><i class="fas fa-sign-in-alt"></i> Login</button>
         <div style="text-align: center; margin-top: 16px; font-size: 0.75rem; color: var(--gray-500);">
+            Default: admin / Admin@123
         </div>
     </div>
 </div>
@@ -620,19 +618,6 @@
 </div>
 
 <script>
-   const firebaseConfig = {
-  apiKey: "AIzaSyBT4DInOtZ-HKTH0mcMn9yXktcIz0mpLtc",
-  authDomain: "pcm-attendance-system.firebaseapp.com",
-  projectId: "pcm-attendance-system",
-  storageBucket: "pcm-attendance-system.firebasestorage.app",
-  messagingSenderId: "1081621674383",
-  appId: "1:1081621674383:web:c3bf3f64e6471c1091f3fa"
-};
-
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-
-    
     // ==================== USER MANAGEMENT SYSTEM ====================
     // Data structures
     let users = [];
