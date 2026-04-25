@@ -8,6 +8,8 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
     <style>
+
+.no-print { display: flex !important; }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         :root {
             --primary-900: #0A2B3E; --primary-800: #144B66; --primary-700: #1E6A8F;
@@ -297,7 +299,6 @@
         <button class="tab-modern" onclick="switchTab('executive')"><i class="fas fa-chart-simple"></i> Executive Dashboard</button>
         <button class="tab-modern" id="adminTabBtn" onclick="switchTab('admin')" style="display: none;"><i class="fas fa-users-cog"></i> User Admin</button>
         <button class="tab-modern" onclick="switchTab('audit')"><i class="fas fa-history"></i> Audit Trail</button>
-        <button class="tab-modern" id="reportsTabBtn" onclick="switchTab('reports')"><i class="fas fa-file-alt"></i> Reports</button>
         <button class="tab-modern" onclick="switchTab('company')"><i class="fas fa-building"></i> Company</button>
         <button class="tab-modern" onclick="switchTab('finalSalary')"><i class="fas fa-calculator"></i> Final Salary</button>
         <button class="tab-modern" onclick="switchTab('storage')"><i class="fas fa-database"></i> Data Storage</button>
@@ -585,33 +586,7 @@
         </div>
     </div>
 
-    <!-- Reports Tab -->
-    <div id="reports" class="tab-content">
-        <div class="content-card">
-            <div class="section-title"><i class="fas fa-file-alt"></i><h2>Reports Center</h2></div>
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px;">
-                <div style="border: 1px solid var(--gray-200); border-radius: 20px; padding: 24px; text-align: center;">
-                    <i class="fas fa-file-pdf" style="font-size: 3rem; color: var(--danger-500); margin-bottom: 16px;"></i>
-                    <h3>Attendance Summary Report</h3>
-                    <p style="margin: 12px 0; color: var(--gray-600);">Generate detailed attendance report with present/absent breakdown</p>
-                    <button class="btn-modern btn-primary-modern" onclick="generateReport('attendance')"><i class="fas fa-download"></i> Generate Report</button>
-                </div>
-                <div style="border: 1px solid var(--gray-200); border-radius: 20px; padding: 24px; text-align: center;">
-                    <i class="fas fa-file-excel" style="font-size: 3rem; color: var(--success-500); margin-bottom: 16px;"></i>
-                    <h3>Payroll Register</h3>
-                    <p style="margin: 12px 0; color: var(--gray-600);">Complete payroll report with all deductions and additions</p>
-                    <button class="btn-modern btn-primary-modern" onclick="generateReport('payroll')"><i class="fas fa-download"></i> Generate Report</button>
-                </div>
-                <div style="border: 1px solid var(--gray-200); border-radius: 20px; padding: 24px; text-align: center;">
-                    <i class="fas fa-chart-bar" style="font-size: 3rem; color: var(--primary-600); margin-bottom: 16px;"></i>
-                    <h3>Exception Analysis</h3>
-                    <p style="margin: 12px 0; color: var(--gray-600);">Detailed analysis of all attendance exceptions</p>
-                    <button class="btn-modern btn-primary-modern" onclick="generateReport('exceptions')"><i class="fas fa-download"></i> Generate Report</button>
-                </div>
-            </div>
-        </div>
-   
-<div class="footer-modern"><i class="fas fa-chart-line"></i> PCM Electrical Systems — Enterprise Intelligence Suite | Working Days: <span id="footerWorkingDays">26</span> days/month</div>
+  
 </div>
 </div>
        <!-- Company Settings Tab -->
@@ -678,6 +653,7 @@
                 <div id="companyPreview"></div>
             </div>
         </div>
+<div class="footer-modern"><i class="fas fa-chart-line"></i> PCM Electrical Systems — Enterprise Intelligence Suite | Working Days: <span id="footerWorkingDays">26</span> days/month</div>
     </div>
 
     <!-- Final Salary Tab with Advanced Filters -->
@@ -775,106 +751,127 @@
                 </table>
             </div>
         </div>
+<div class="footer-modern"><i class="fas fa-chart-line"></i> PCM Electrical Systems — Enterprise Intelligence Suite | Working Days: <span id="footerWorkingDays">26</span> days/month</div>
     </div>
 
-       <!-- Data Storage Tab - Clean & Professional -->
-    <div id="storage" class="tab-content">
-        <div class="content-card">
-            <div class="section-title"><i class="fas fa-database"></i><h2>Data Storage</h2></div>
-            
-            <!-- Status Card -->
-            <div style="background: linear-gradient(135deg, #E8F0FE 0%, #F0F6FF 100%); border-radius: 20px; padding: 24px; margin-bottom: 28px; border: 1px solid var(--primary-300);">
-                <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 20px;">
-                    <div style="display: flex; align-items: center; gap: 20px;">
-                        <div style="width: 60px; height: 60px; background: var(--primary-600); border-radius: 20px; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.8rem;">
-                            <i class="fas fa-database"></i>
+       <!-- Data Storage Tab - Multi-Sheet Excel Export -->
+<div id="storage" class="tab-content">
+    <div class="content-card">
+        <div class="section-title"><i class="fas fa-database"></i><h2>Data Storage & Backup Center</h2></div>
+        
+        <!-- Status Card -->
+        <div style="background: linear-gradient(135deg, #E8F0FE 0%, #F0F6FF 100%); border-radius: 20px; padding: 24px; margin-bottom: 28px; border: 2px solid var(--primary-300);">
+            <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 20px;">
+                <div style="display: flex; align-items: center; gap: 20px;">
+                    <div style="width: 60px; height: 60px; background: linear-gradient(135deg, var(--primary-600), var(--primary-700)); border-radius: 20px; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.8rem;">
+                        <i class="fas fa-database"></i>
+                    </div>
+                    <div>
+                        <h3 style="margin: 0 0 8px 0; color: var(--gray-800);">Storage Status</h3>
+                        <div style="display: flex; gap: 30px; flex-wrap: wrap;">
+                            <div><span style="color: var(--gray-600); font-size: 0.85rem;">Employees:</span> <strong id="storedEmployees2" style="font-size: 1.1rem; color: var(--primary-700);">0</strong></div>
+                            <div><span style="color: var(--gray-600); font-size: 0.85rem;">Records:</span> <strong id="storedAttendance2" style="font-size: 1.1rem; color: var(--primary-700);">0</strong></div>
+                            <div><span style="color: var(--gray-600); font-size: 0.85rem;">Last Save:</span> <strong id="lastSavedTime2" style="font-size: 1.1rem; color: var(--primary-700);">Never</strong></div>
                         </div>
-                        <div>
-                            <h3 style="margin: 0 0 8px 0; color: var(--gray-800);">Storage Status</h3>
-                            <div style="display: flex; gap: 30px; flex-wrap: wrap;">
-                                <div><span style="color: var(--gray-600);">Employees:</span> <strong id="storedEmployees2">0</strong></div>
-                                <div><span style="color: var(--gray-600);">Records:</span> <strong id="storedAttendance2">0</strong></div>
-                                <div><span style="color: var(--gray-600);">Last Save:</span> <strong id="lastSavedTime2">Never</strong></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div id="storageStatusBadge2" style="padding: 8px 20px; border-radius: 40px; font-weight: 600; font-size: 0.85rem; background: #E6F3FA; color: #1E6A8F;">
-                        <i class="fas fa-check-circle"></i> Ready
                     </div>
                 </div>
-            </div>
-            
-            <!-- Main Actions -->
-            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; margin-bottom: 28px;">
-                <!-- Export Card -->
-                <div style="background: white; border: 1px solid var(--gray-200); border-radius: 20px; padding: 24px; text-align: center; cursor: pointer; transition: all 0.3s;" onclick="exportCompleteWorkbook()" onmouseover="this.style.borderColor='#27AE60'; this.style.boxShadow='var(--shadow-md)'" onmouseout="this.style.borderColor='var(--gray-200)'; this.style.boxShadow='none'">
-                    <div style="width: 60px; height: 60px; background: linear-gradient(135deg, #27AE60, #1D6F42); border-radius: 20px; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; color: white; font-size: 1.8rem;">
-                        <i class="fas fa-file-excel"></i>
-                    </div>
-                    <h3 style="margin-bottom: 8px; color: var(--gray-800);">Export Complete Workbook</h3>
-                    <p style="color: var(--gray-600); font-size: 0.85rem; margin-bottom: 16px;">All data in one Excel file with multiple formatted sheets</p>
-                    <span style="color: var(--success-500); font-weight: 600;"><i class="fas fa-download"></i> Click to Export</span>
-                </div>
-                
-                <!-- Load Card -->
-                <div style="background: white; border: 1px solid var(--gray-200); border-radius: 20px; padding: 24px;">
-                    <div style="width: 60px; height: 60px; background: linear-gradient(135deg, var(--primary-600), var(--primary-700)); border-radius: 20px; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; color: white; font-size: 1.8rem;">
-                        <i class="fas fa-history"></i>
-                    </div>
-                    <h3 style="margin-bottom: 8px; color: var(--gray-800);">Load Previous Data</h3>
-                    <p style="color: var(--gray-600); font-size: 0.85rem; margin-bottom: 16px;">Restore data from a previously saved backup file</p>
-                    
-                    <select id="monthSelector2" style="width: 100%; padding: 12px; border-radius: 14px; border: 1px solid var(--gray-300); margin-bottom: 12px; font-size: 0.9rem;">
-                        <option value="">-- Select Month --</option>
-                    </select>
-                    
-                    <button class="btn-modern btn-primary-modern" onclick="loadSelectedMonthData()" style="width: 100%; justify-content: center;">
-                        <i class="fas fa-upload"></i> Load Selected Data
-                    </button>
-                    <p style="color: var(--gray-500); font-size: 0.75rem; margin-top: 12px; text-align: center;">
-                        <i class="fas fa-info-circle"></i> Select JSON backup file when prompted
-                    </p>
-                </div>
-            </div>
-            
-            <!-- Auto-Save Info (Subtle) -->
-            <div style="background: var(--gray-100); border-radius: 16px; padding: 16px 20px; display: flex; align-items: center; gap: 12px;">
-                <i class="fas fa-cloud-upload-alt" style="color: var(--primary-600); font-size: 1.2rem;"></i>
-                <div>
-                    <span style="font-weight: 600; color: var(--gray-700);">Auto-Save Enabled</span>
-                    <span style="color: var(--gray-600); font-size: 0.8rem; margin-left: 10px;">Changes are automatically saved every 5 seconds</span>
-                </div>
-                <div style="margin-left: auto;">
-                    <span style="font-size: 0.75rem; color: var(--gray-500);"><i class="far fa-clock"></i> <span id="autoSaveCountdown">--</span></span>
-                </div>
-            </div>
-            
-            <!-- Hidden Settings (Clean UI) -->
-            <div style="margin-top: 24px; text-align: right;">
-                <span style="color: var(--gray-400); font-size: 0.75rem; cursor: pointer;" onclick="document.getElementById('advancedStorageSettings').style.display='block'">
-                    <i class="fas fa-cog"></i> Advanced
-                </span>
-            </div>
-            
-            <!-- Advanced Settings (Hidden by default) -->
-            <div id="advancedStorageSettings" style="display: none; margin-top: 16px; padding: 20px; background: var(--gray-100); border-radius: 16px;">
-                <h4 style="margin-bottom: 16px; color: var(--gray-700);">Advanced Storage Settings</h4>
-                <div style="display: flex; gap: 20px; flex-wrap: wrap;">
-                    <label style="display: flex; align-items: center; gap: 8px;">
-                        <input type="checkbox" id="autoSaveEnabled2" checked> Auto-Save
-                    </label>
-                    <label style="display: flex; align-items: center; gap: 8px;">
-                        <input type="checkbox" id="monthWiseFolders2" checked> Month-wise files
-                    </label>
-                    <div style="flex: 1; min-width: 250px;">
-                        <input type="text" id="storageFolderPath2" placeholder="Storage Path" style="width: 100%; padding: 8px 12px; border-radius: 10px; border: 1px solid var(--gray-300); font-size: 0.8rem;" value="C:\PCM_Data\">
-                    </div>
-                    <button class="btn-modern btn-outline-modern" onclick="saveStorageSettings2()" style="padding: 8px 16px;">Save</button>
-                    <button class="btn-modern btn-outline-modern" onclick="document.getElementById('advancedStorageSettings').style.display='none'" style="padding: 8px 16px;">Close</button>
+                <div id="storageStatusBadge2" style="padding: 10px 24px; border-radius: 40px; font-weight: 700; font-size: 0.9rem; background: #E6F3FA; color: #1E6A8F; display: flex; align-items: center; gap: 8px;">
+                    <i class="fas fa-check-circle"></i> Ready
                 </div>
             </div>
         </div>
-    </div> 
+        
+        <!-- Auto-Save Toggle -->
+        <div style="background: white; border: 2px solid var(--gray-200); border-radius: 20px; padding: 20px; margin-bottom: 28px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px;">
+            <div style="display: flex; align-items: center; gap: 16px;">
+                <div style="width: 50px; height: 50px; background: linear-gradient(135deg, #27AE60, #1D6F42); border-radius: 16px; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.3rem;">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                </div>
+                <div>
+                    <h4 style="margin: 0; color: var(--gray-800);">Auto-Save Backup</h4>
+                    <p style="margin: 4px 0 0; font-size: 0.8rem; color: var(--gray-600);">Automatically saves data every 5 seconds</p>
+                </div>
+            </div>
+            <div style="display: flex; align-items: center; gap: 16px;">
+                <span id="autoSaveStatusText" style="font-weight: 600; font-size: 0.85rem; color: var(--success-500);">● Active</span>
+                <button id="autoSaveToggleBtn" onclick="toggleAutoSave()" style="padding: 12px 28px; background: linear-gradient(135deg, var(--danger-500), #C0392B); color: white; border: none; border-radius: 14px; font-weight: 700; font-size: 0.85rem; cursor: pointer; transition: all 0.3s;">
+                    <i class="fas fa-power-off"></i> Turn Off
+                </button>
+            </div>
+        </div>
+        
+        <!-- Main Actions Grid -->
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 28px;">
+            
+            <!-- Export Multi-Sheet Excel -->
+            <div style="background: white; border: 2px solid var(--gray-200); border-radius: 20px; padding: 24px; text-align: center; cursor: pointer; transition: all 0.3s;" onclick="exportMultiSheetExcel()" onmouseover="this.style.borderColor='#27AE60'; this.style.boxShadow='var(--shadow-lg)'" onmouseout="this.style.borderColor='var(--gray-200)'; this.style.boxShadow='none'">
+                <div style="width: 64px; height: 64px; background: linear-gradient(135deg, #27AE60, #1D6F42); border-radius: 20px; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; color: white; font-size: 1.8rem;">
+                    <i class="fas fa-file-excel"></i>
+                </div>
+                <h3 style="margin-bottom: 8px; color: var(--gray-800);">📥 Export All Data</h3>
+                <p style="color: var(--gray-600); font-size: 0.8rem; margin-bottom: 16px;">Complete Excel workbook with <strong>multiple sheets</strong> - each sheet = one tab data</p>
+                <span style="display: inline-block; padding: 8px 20px; background: linear-gradient(135deg, #27AE60, #1D6F42); color: white; border-radius: 10px; font-weight: 700; font-size: 0.8rem;">
+                    <i class="fas fa-download"></i> Export Now
+                </span>
+            </div>
+            
+            <!-- Export JSON Backup -->
+            <div style="background: white; border: 2px solid var(--gray-200); border-radius: 20px; padding: 24px; text-align: center; cursor: pointer; transition: all 0.3s;" onclick="exportJSONBackup()" onmouseover="this.style.borderColor='#1E6A8F'; this.style.boxShadow='var(--shadow-lg)'" onmouseout="this.style.borderColor='var(--gray-200)'; this.style.boxShadow='none'">
+                <div style="width: 64px; height: 64px; background: linear-gradient(135deg, var(--primary-600), var(--primary-700)); border-radius: 20px; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; color: white; font-size: 1.8rem;">
+                    <i class="fas fa-file-archive"></i>
+                </div>
+                <h3 style="margin-bottom: 8px; color: var(--gray-800);">💾 JSON Backup</h3>
+                <p style="color: var(--gray-600); font-size: 0.8rem; margin-bottom: 16px;">Complete data backup in <strong>JSON format</strong> - easy to restore later</p>
+                <span style="display: inline-block; padding: 8px 20px; background: linear-gradient(135deg, var(--primary-600), var(--primary-700)); color: white; border-radius: 10px; font-weight: 700; font-size: 0.8rem;">
+                    <i class="fas fa-download"></i> Backup JSON
+                </span>
+            </div>
+            
+            <!-- Load Backup -->
+            <div style="background: white; border: 2px solid var(--gray-200); border-radius: 20px; padding: 24px; text-align: center; cursor: pointer; transition: all 0.3s;" onclick="loadBackupData()" onmouseover="this.style.borderColor='#FF8C42'; this.style.boxShadow='var(--shadow-lg)'" onmouseout="this.style.borderColor='var(--gray-200)'; this.style.boxShadow='none'">
+                <div style="width: 64px; height: 64px; background: linear-gradient(135deg, #FF8C42, #E67E22); border-radius: 20px; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; color: white; font-size: 1.8rem;">
+                    <i class="fas fa-upload"></i>
+                </div>
+                <h3 style="margin-bottom: 8px; color: var(--gray-800);">📂 Restore Backup</h3>
+                <p style="color: var(--gray-600); font-size: 0.8rem; margin-bottom: 16px;">Load previously saved <strong>JSON backup</strong> file</p>
+                <span style="display: inline-block; padding: 8px 20px; background: linear-gradient(135deg, #FF8C42, #E67E22); color: white; border-radius: 10px; font-weight: 700; font-size: 0.8rem;">
+                    <i class="fas fa-upload"></i> Load Backup
+                </span>
+            </div>
+        </div>
+        
+        <!-- Sheet Preview Info -->
+        <div style="background: linear-gradient(135deg, #F8FAFC, #F1F5F9); border: 1px solid var(--gray-200); border-radius: 16px; padding: 20px; margin-bottom: 20px;">
+            <h4 style="margin-bottom: 12px; color: var(--gray-700);"><i class="fas fa-list-alt"></i> Excel Workbook Structure (Multi-Sheet Format)</h4>
+            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px;">
+                <div style="background: white; padding: 10px 14px; border-radius: 10px; border-left: 4px solid #1E6A8F;">
+                    <strong style="font-size: 0.8rem;">📊 Sheet 1:</strong><br><span style="font-size: 0.75rem; color: var(--gray-600);">Executive Dashboard</span>
+                </div>
+                <div style="background: white; padding: 10px 14px; border-radius: 10px; border-left: 4px solid #27AE60;">
+                    <strong style="font-size: 0.8rem;">💰 Sheet 2:</strong><br><span style="font-size: 0.75rem; color: var(--gray-600);">Payroll Register</span>
+                </div>
+                <div style="background: white; padding: 10px 14px; border-radius: 10px; border-left: 4px solid #F39C12;">
+                    <strong style="font-size: 0.8rem;">📅 Sheet 3:</strong><br><span style="font-size: 0.75rem; color: var(--gray-600);">Attendance Log</span>
+                </div>
+                <div style="background: white; padding: 10px 14px; border-radius: 10px; border-left: 4px solid #E74C3C;">
+                    <strong style="font-size: 0.8rem;">⚠️ Sheet 4:</strong><br><span style="font-size: 0.75rem; color: var(--gray-600);">Exceptions Report</span>
+                </div>
+                <div style="background: white; padding: 10px 14px; border-radius: 10px; border-left: 4px solid #8B5CF6;">
+                    <strong style="font-size: 0.8rem;">💵 Sheet 5:</strong><br><span style="font-size: 0.75rem; color: var(--gray-600);">Final Salary</span>
+                </div>
+                <div style="background: white; padding: 10px 14px; border-radius: 10px; border-left: 4px solid #EC4899;">
+                    <strong style="font-size: 0.8rem;">🏢 Sheet 6:</strong><br><span style="font-size: 0.75rem; color: var(--gray-600);">Company Settings</span>
+                </div>
+                <div style="background: white; padding: 10px 14px; border-radius: 10px; border-left: 4px solid #0EA5E9;">
+                    <strong style="font-size: 0.8rem;">👥 Sheet 7:</strong><br><span style="font-size: 0.75rem; color: var(--gray-600);">User Management</span>
+                </div>
+                <div style="background: white; padding: 10px 14px; border-radius: 10px; border-left: 4px solid #10B981;">
+                    <strong style="font-size: 0.8rem;">📝 Sheet 8:</strong><br><span style="font-size: 0.75rem; color: var(--gray-600);">Audit Trail</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> 
 
 
 <!-- Login Modal -->
@@ -1274,7 +1271,7 @@
        const MODULES = [
     'regulation', 'attendance_log', 'attendance_exceptions', 
     'payroll', 'executive_dashboard', 'user_administration', 
-    'audit_trail', 'reports', 'company_settings', 'final_salary', 
+    'audit_trail', 'company_settings', 'final_salary', 
     'print_reports', 'data_storage'
 ];
     
@@ -1421,7 +1418,6 @@
     'executive': 'executive_dashboard',
     'admin': 'user_administration',
     'audit': 'audit_trail',
-    'reports': 'reports',
     'company': 'company_settings',
     'finalSalary': 'final_salary',
     'storage': 'data_storage'
@@ -3308,11 +3304,159 @@ function performUpdateEncashment(e) {
 
 function performPrintPayroll() {
     let printWindow = window.open('', '_blank', 'width=1200,height=800');
-    let content = `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Payroll - ${companyInfo.name}</title>
-        <style>body{font-family:Inter,sans-serif;margin:0;padding:20px;background:white}.print-header{display:flex;justify-content:space-between;padding:20px;border-bottom:2px solid #1E6A8F}.print-footer{display:flex;justify-content:space-between;margin-top:30px;padding-top:15px;border-top:1px solid #ddd}.print-watermark{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%)rotate(-45deg);font-size:80pt;opacity:.06;color:#1E6A8F}table{width:100%;border-collapse:collapse;font-size:9pt}th{background:#1E6A8F;color:#fff;padding:10px 8px}td{padding:8px;border-bottom:1px solid #ddd}.amount{text-align:right}</style></head><body>
-        <div class="print-watermark">${companyInfo.name}</div>${getCompanyPrintHeader()}<h2 style="text-align:center">💰 PAYROLL REGISTER</h2>
-        ${document.getElementById('salaryTable').cloneNode(true).outerHTML}${getCompanyPrintFooter('Payroll Register')}
-        <script>window.onload=function(){window.print();setTimeout(()=>window.close(),500)}<\/script></body></html>`;
+    let now = new Date();
+    let dateStr = now.toLocaleDateString('en-PK', { year: 'numeric', month: 'long', day: 'numeric' });
+    let timeStr = now.toLocaleTimeString('en-PK', { hour: '2-digit', minute: '2-digit' });
+    
+    let totalGross = 0, totalNet = 0;
+    Object.keys(salaryData).forEach(emp => {
+        let d = calculateEmployeeSalaryDetails(emp);
+        totalGross += d.gross;
+        totalNet += d.netPayable;
+    });
+    
+    let tbl = document.getElementById('salaryTable').cloneNode(true);
+    tbl.querySelectorAll('*').forEach(el => el.removeAttribute('style'));
+    
+    let content = `<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Payroll Report - ${companyInfo.name}</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        .no-print { display: flex !important; }
+        body { 
+            font-family: 'Segoe UI', Arial, sans-serif; padding: 20px; background: white; 
+            color: #1E293B; width: 100%;
+        }
+        .watermark {
+            position: fixed; top: 45%; left: 50%;
+            transform: translate(-50%, -50%) rotate(-25deg);
+            font-size: 120pt; opacity: 0.03; color: #1E6A8F;
+            pointer-events: none; z-index: 1000; font-weight: 900;
+            white-space: nowrap; letter-spacing: 5px;
+        }
+        
+        .header {
+            display: flex; justify-content: space-between; align-items: center;
+            padding-bottom: 18px; border-bottom: 3px solid #1E6A8F; margin-bottom: 18px;
+        }
+        .header h1 { font-size: 22pt; color: #0A2B3E; margin: 0; font-weight: 900; }
+        .header .sub { font-size: 9pt; color: #475569; margin-top: 3px; }
+        .header .info { text-align: right; font-size: 9pt; color: #334155; line-height: 1.6; font-weight: 500; }
+        .header .info strong { color: #0A2B3E; }
+        
+        .report-title {
+            text-align: center; font-size: 16pt; font-weight: 900; color: white;
+            padding: 10px 20px; background: linear-gradient(135deg, #1E6A8F, #0A2B3E); 
+            border-radius: 8px; margin: 16px 0; letter-spacing: 1px;
+        }
+        
+        .summary-box {
+            display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin: 16px 0;
+        }
+        .summary-item {
+            background: linear-gradient(135deg, #F8FAFC, #F1F5F9); 
+            border: 2px solid #E2E8F0; border-radius: 10px; padding: 14px; text-align: center;
+        }
+        .summary-item .label { font-size: 8pt; color: #64748B; text-transform: uppercase; letter-spacing: 1px; font-weight: 600; }
+        .summary-item .value { font-size: 18pt; font-weight: 900; color: #0F172A; margin-top: 4px; }
+        
+        table { width: 100%; border-collapse: collapse; font-size: 9pt; margin: 12px 0; }
+        th { 
+            background: #1E6A8F !important; color: white !important; 
+            padding: 10px 8px; font-weight: 700; text-transform: uppercase; 
+            font-size: 8pt; letter-spacing: 0.5px; text-align: center; 
+        }
+        td { 
+            padding: 8px 8px; border-bottom: 1px solid #CBD5E1; 
+            text-align: center; font-weight: 500; 
+        }
+        tr:nth-child(even) td { background: #F8FAFC; }
+        tr:hover td { background: #E6F3FA !important; }
+        td:first-child, th:first-child { text-align: left; font-weight: 600; }
+        .amount { 
+            text-align: right !important; font-family: 'Consolas', monospace; 
+            font-weight: 700; font-size: 9pt; 
+        }
+        .status-present { background: #D1FAE5; color: #065F46; padding: 3px 10px; border-radius: 12px; font-size: 8pt; font-weight: 700; display: inline-block; }
+        .status-absent { background: #FEE2E2; color: #991B1B; padding: 3px 10px; border-radius: 12px; font-size: 8pt; font-weight: 700; display: inline-block; }
+        .status-ambiguous { background: #FEF3C7; color: #92400E; padding: 3px 10px; border-radius: 12px; font-size: 8pt; font-weight: 700; display: inline-block; }
+        
+        .footer {
+            margin-top: 24px; padding-top: 12px; border-top: 2px solid #CBD5E1;
+            display: flex; justify-content: space-between; font-size: 8pt; color: #64748B; font-weight: 500;
+        }
+        .signature-line { width: 180px; border-bottom: 1px solid #475569; margin-top: 30px; }
+        
+        @media print {
+    body { 
+        padding: 0.3cm !important; 
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+    @page { size: A4 landscape; margin: 0.6cm; }
+    .watermark { opacity: 0.03 !important; }
+    th { background: #1E6A8F !important; color: white !important; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+    tr:nth-child(even) td { background: #F8FAFC !important; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+    .status-present { background: #D1FAE5 !important; color: #065F46 !important; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+    .status-absent { background: #FEE2E2 !important; color: #991B1B !important; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+    .status-ambiguous { background: #FEF3C7 !important; color: #92400E !important; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+    .summary-item { background: linear-gradient(135deg, #F8FAFC, #F1F5F9) !important; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+    .report-title { background: linear-gradient(135deg, #1E6A8F, #0A2B3E) !important; color: white !important; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+}
+    </style>
+</head>
+<body>
+    <div class="watermark">${companyInfo.name.toUpperCase()}</div>
+    
+    <div class="header">
+        <div>
+            <h1>${companyInfo.name}</h1>
+            <div class="sub">${companyInfo.address1}, ${companyInfo.address2}, ${companyInfo.city}</div>
+            <div class="sub">📞 ${companyInfo.phone} &nbsp;|&nbsp; ✉️ ${companyInfo.email} &nbsp;|&nbsp; 🌐 ${companyInfo.website}</div>
+        </div>
+        <div class="info">
+            <strong>NTN:</strong> ${companyInfo.ntn}<br>
+            <strong>Date:</strong> ${dateStr}<br>
+            <strong>Time:</strong> ${timeStr}
+        </div>
+    </div>
+    
+    <div class="report-title">💰 PAYROLL REGISTER</div>
+    
+    <div class="summary-box">
+        <div class="summary-item"><div class="label">Total Employees</div><div class="value">${Object.keys(salaryData).length}</div></div>
+        <div class="summary-item"><div class="label">Total Gross Salary</div><div class="value" style="font-size:15pt;">PKR ${formatNumber(totalGross)}</div></div>
+        <div class="summary-item"><div class="label">Working Days/Month</div><div class="value">${workingDaysPerMonth}</div></div>
+        <div class="summary-item"><div class="label">Net Payable</div><div class="value" style="font-size:15pt; color:#065F46;">PKR ${formatNumber(totalNet)}</div></div>
+    </div>
+    
+    ${tbl.outerHTML}
+    
+    <div class="footer">
+        <div>
+            <strong>Generated by:</strong> ${currentUser?.username || 'System'}<br>
+            PCM Enterprise Intelligence Suite
+        </div>
+        <div style="text-align: center;">
+            <div class="signature-line"></div>
+            <strong style="font-size:9pt;">${companyInfo.authName}</strong><br>
+            <span style="font-size:8pt;">${companyInfo.authDesignation}</span>
+        </div>
+        <div style="text-align: right;">
+            <strong>Page:</strong> 1 of 1<br>
+            ${dateStr}
+        </div>
+    </div>
+    <div class="no-print" style="position:fixed;top:15px;right:15px;z-index:9999;display:flex;gap:10px;">
+        <button onclick="window.print()" style="padding:12px 30px;background:linear-gradient(135deg,#1E6A8F,#0A2B3E);color:white;border:none;border-radius:10px;font-size:13pt;font-weight:700;cursor:pointer;box-shadow:0 4px 15px rgba(0,0,0,0.3);">🖨️ Print Now</button>
+        <button onclick="window.close()" style="padding:12px 24px;background:white;color:#475569;border:2px solid #CBD5E1;border-radius:10px;font-size:13pt;font-weight:600;cursor:pointer;">✕ Close</button>
+    </div>
+</body>
+</body>
+</html>`;
     printWindow.document.write(content); printWindow.document.close();
     addAuditLog(currentUser.username, 'Print', 'Printed payroll report');
 }
@@ -3344,11 +3488,141 @@ function performPrintPayroll() {
 
 function performPrintExecutive() {
     let printWindow = window.open('', '_blank', 'width=1200,height=800');
-    let content = `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Executive Dashboard - ${companyInfo.name}</title>
-        <style>body{font-family:Inter,sans-serif;margin:0;padding:20px;background:white}.print-header{display:flex;justify-content:space-between;padding:20px;border-bottom:2px solid #1E6A8F}.print-footer{display:flex;justify-content:space-between;margin-top:30px;padding-top:15px;border-top:1px solid #ddd}.print-watermark{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%)rotate(-45deg);font-size:80pt;opacity:.06;color:#1E6A8F}table{width:100%;border-collapse:collapse;font-size:9pt}th{background:#1E6A8F;color:#fff;padding:10px 8px}td{padding:8px;border-bottom:1px solid #ddd}</style></head><body>
-        <div class="print-watermark">EXECUTIVE</div>${getCompanyPrintHeader()}<h2 style="text-align:center">📊 EXECUTIVE DASHBOARD</h2>
-        ${document.getElementById('executiveTable').cloneNode(true).outerHTML}${getCompanyPrintFooter('Executive Dashboard')}
-        <script>window.onload=function(){window.print();setTimeout(()=>window.close(),500)}<\/script></body></html>`;
+    let now = new Date();
+    let dateStr = now.toLocaleDateString('en-PK', { year: 'numeric', month: 'long', day: 'numeric' });
+    let timeStr = now.toLocaleTimeString('en-PK', { hour: '2-digit', minute: '2-digit' });
+    
+    let tbl = document.getElementById('executiveTable').cloneNode(true);
+    tbl.querySelectorAll('*').forEach(el => el.removeAttribute('style'));
+    
+    let content = `<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Executive Dashboard - ${companyInfo.name}</title>
+    <style>
+        
+.no-print { display: flex !important; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Segoe UI', Arial, sans-serif; padding: 20px; background: white; 
+            color: #1E293B; width: 100%;
+        }
+        .watermark {
+            position: fixed; top: 45%; left: 50%;
+            transform: translate(-50%, -50%) rotate(-25deg);
+            font-size: 100pt; opacity: 0.03; color: #1E6A8F;
+            pointer-events: none; z-index: 1000; font-weight: 900;
+            letter-spacing: 5px;
+        }
+        
+        .header {
+            display: flex; justify-content: space-between; align-items: center;
+            padding-bottom: 16px; border-bottom: 3px solid #1E6A8F; margin-bottom: 16px;
+        }
+        .header h1 { font-size: 20pt; color: #0A2B3E; margin: 0; font-weight: 900; }
+        .header .sub { font-size: 9pt; color: #475569; margin-top: 3px; }
+        .header .info { text-align: right; font-size: 9pt; color: #334155; line-height: 1.6; font-weight: 500; }
+        
+        .report-title {
+            text-align: center; font-size: 15pt; font-weight: 900; color: white;
+            padding: 10px; background: linear-gradient(135deg, #1E6A8F, #0A2B3E); 
+            border-radius: 8px; margin: 14px 0; letter-spacing: 1px;
+        }
+        
+        .kpi-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin: 14px 0; }
+        .kpi-card { 
+            background: linear-gradient(135deg, #F8FAFC, #F1F5F9); 
+            border: 2px solid #E2E8F0; border-radius: 10px; padding: 12px; text-align: center; 
+        }
+        .kpi-card h4 { font-size: 7pt; color: #64748B; text-transform: uppercase; letter-spacing: 1px; font-weight: 600; }
+        .kpi-card .value { font-size: 16pt; font-weight: 900; color: #0F172A; margin-top: 4px; }
+        
+        table { width: 100%; border-collapse: collapse; font-size: 9pt; margin: 10px 0; }
+        th { 
+            background: #1E6A8F !important; color: white !important; 
+            padding: 10px 6px; font-size: 8pt; text-transform: uppercase; 
+            font-weight: 700; letter-spacing: 0.5px; text-align: center; 
+        }
+        td { 
+            padding: 8px 6px; border-bottom: 1px solid #CBD5E1; 
+            text-align: center; font-weight: 500; 
+        }
+        tr:nth-child(even) td { background: #F8FAFC; }
+        td:first-child, th:first-child { text-align: left; font-weight: 600; }
+        .amount { text-align: right !important; font-family: 'Consolas', monospace; font-weight: 700; }
+        .status-badge { padding: 3px 8px; border-radius: 10px; font-size: 7pt; font-weight: 700; display: inline-block; }
+        
+        .footer {
+            margin-top: 20px; padding-top: 10px; border-top: 2px solid #CBD5E1;
+            display: flex; justify-content: space-between; font-size: 8pt; color: #64748B; font-weight: 500;
+        }
+        .signature-line { width: 160px; border-bottom: 1px solid #475569; margin-top: 25px; }
+        
+        @media print {
+    body { 
+        padding: 0.3cm !important; 
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+    @page { size: A4 landscape; margin: 0.6cm; }
+    .watermark { opacity: 0.03 !important; }
+    th { background: #1E6A8F !important; color: white !important; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+    tr:nth-child(even) td { background: #F8FAFC !important; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+    .kpi-card { background: linear-gradient(135deg, #F8FAFC, #F1F5F9) !important; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+    .report-title { background: linear-gradient(135deg, #1E6A8F, #0A2B3E) !important; color: white !important; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+}
+    </style>
+</head>
+<body>
+    <div class="watermark">EXECUTIVE</div>
+    
+    <div class="header">
+        <div>
+            <h1>${companyInfo.name}</h1>
+            <div class="sub">${companyInfo.address1}, ${companyInfo.city}</div>
+        </div>
+        <div class="info">
+            <strong>Date:</strong> ${dateStr}<br>
+            <strong>Time:</strong> ${timeStr}
+        </div>
+    </div>
+    
+    <div class="report-title">📊 EXECUTIVE DASHBOARD</div>
+    
+    <div class="kpi-grid">
+        <div class="kpi-card"><h4>Total Employees</h4><div class="value">${document.getElementById('execTotalEmp')?.innerText || '0'}</div></div>
+        <div class="kpi-card"><h4>Present Days</h4><div class="value">${document.getElementById('execTotalPresent')?.innerText || '0'}</div></div>
+        <div class="kpi-card"><h4>Absent Days</h4><div class="value">${document.getElementById('execTotalAbsent')?.innerText || '0'}</div></div>
+        <div class="kpi-card"><h4>Attendance Rate</h4><div class="value">${document.getElementById('execAttendanceRate')?.innerText || '0%'}</div></div>
+        <div class="kpi-card"><h4>Net Payable</h4><div class="value" style="font-size:13pt; color:#065F46;">${document.getElementById('execTotalPayable')?.innerText || '0'}</div></div>
+    </div>
+    
+    ${tbl.outerHTML}
+    
+    <div class="footer">
+        <div>
+            <strong>Generated by:</strong> ${currentUser?.username || 'System'}<br>
+            PCM Enterprise Intelligence Suite
+        </div>
+        <div style="text-align: center;">
+            <div class="signature-line"></div>
+            <strong style="font-size:9pt;">${companyInfo.authName}</strong><br>
+            <span style="font-size:8pt;">${companyInfo.authDesignation}</span>
+        </div>
+        <div style="text-align: right;">
+            <strong>Page:</strong> 1 of 1
+        </div>
+    </div>
+            </div>
+        </div>
+        
+        <div class="no-print" style="position:fixed;top:15px;right:15px;z-index:9999;display:flex;gap:10px;">
+        <button onclick="window.print()" style="padding:12px 30px;background:linear-gradient(135deg,#1E6A8F,#0A2B3E);color:white;border:none;border-radius:10px;font-size:13pt;font-weight:700;cursor:pointer;box-shadow:0 4px 15px rgba(0,0,0,0.3);">🖨️ Print Now</button>
+        <button onclick="window.close()" style="padding:12px 24px;background:white;color:#475569;border:2px solid #CBD5E1;border-radius:10px;font-size:13pt;font-weight:600;cursor:pointer;">✕ Close</button>
+    </div>
+</body>
+</html>`;
     printWindow.document.write(content); printWindow.document.close();
     addAuditLog(currentUser.username, 'Print', 'Printed executive dashboard');
 }
@@ -3359,17 +3633,160 @@ function performPrintExecutive() {
     }
     
     function performPrintFinalSalary() {
-        let printWindow = window.open('', '_blank', 'width=1200,height=800');
-        let tableHtml = document.getElementById('finalSalaryTable').cloneNode(true).outerHTML;
-        let content = `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Final Salary - ${companyInfo.name}</title>
-            <style>body{font-family:Inter,sans-serif;margin:0;padding:20px;background:white}.print-header{display:flex;justify-content:space-between;padding:20px;border-bottom:2px solid #1E6A8F}.print-footer{display:flex;justify-content:space-between;margin-top:30px;padding-top:15px;border-top:1px solid #ddd}.print-watermark{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%)rotate(-45deg);font-size:80pt;opacity:.06;color:#1E6A8F}table{width:100%;border-collapse:collapse;font-size:8pt}th{background:#1E6A8F;color:#fff;padding:8px 5px}td{padding:6px 5px;border-bottom:1px solid #ddd}.amount{text-align:right}</style></head><body>
-            <div class="print-watermark">FINAL SALARY</div>${getCompanyPrintHeader()}<h2 style="text-align:center">💰 FINAL SALARY REPORT</h2>
-            ${tableHtml}${getCompanyPrintFooter('Final Salary Report')}
-            <script>window.onload=function(){window.print();setTimeout(()=>window.close(),500)}<\/script></body></html>`;
-        printWindow.document.write(content); printWindow.document.close();
-        addAuditLog(currentUser.username, 'Print', 'Printed final salary report');
-    }
+    let printWindow = window.open('', '_blank', 'width=1200,height=800');
+    let now = new Date();
+    let dateStr = now.toLocaleDateString('en-PK', { year: 'numeric', month: 'long', day: 'numeric' });
+    let timeStr = now.toLocaleTimeString('en-PK', { hour: '2-digit', minute: '2-digit' });
     
+    let tbl = document.getElementById('finalSalaryTable').cloneNode(true);
+    tbl.querySelectorAll('*').forEach(el => el.removeAttribute('style'));
+    
+    let totalEmp = finalSalaryFilteredData.length;
+    let totalGross = finalSalaryFilteredData.reduce((s, e) => s + e.gross, 0);
+    let totalNet = finalSalaryFilteredData.reduce((s, e) => s + e.netPayable, 0);
+    let totalDeductions = finalSalaryFilteredData.reduce((s, e) => s + e.lateDeduct + e.earlyDeduct + e.absentDeduct, 0);
+    let totalAdditions = finalSalaryFilteredData.reduce((s, e) => s + e.otPaid + e.encashment, 0);
+    let avgAttendance = finalSalaryFilteredData.length > 0 ? finalSalaryFilteredData.reduce((s, e) => s + e.attendancePercent, 0) / finalSalaryFilteredData.length : 0;
+    
+    let content = `<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Final Salary Report - ${companyInfo.name}</title>
+    <style>
+
+.no-print { display: flex !important; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Segoe UI', Arial, sans-serif; padding: 20px; background: white; 
+            color: #1E293B; width: 100%;
+        }
+        .watermark {
+            position: fixed; top: 45%; left: 50%;
+            transform: translate(-50%, -50%) rotate(-25deg);
+            font-size: 100pt; opacity: 0.03; color: #1E6A8F;
+            pointer-events: none; z-index: 1000; font-weight: 900;
+            letter-spacing: 5px;
+        }
+        
+        .header {
+            display: flex; justify-content: space-between; align-items: center;
+            padding-bottom: 16px; border-bottom: 3px solid #1E6A8F; margin-bottom: 16px;
+        }
+        .header h1 { font-size: 20pt; color: #0A2B3E; margin: 0; font-weight: 900; }
+        .header .sub { font-size: 9pt; color: #475569; margin-top: 3px; }
+        .header .info { text-align: right; font-size: 9pt; color: #334155; line-height: 1.6; font-weight: 500; }
+        .header .info strong { color: #0A2B3E; }
+        
+        .report-title {
+            text-align: center; font-size: 15pt; font-weight: 900; color: white;
+            padding: 10px; background: linear-gradient(135deg, #1E6A8F, #0A2B3E); 
+            border-radius: 8px; margin: 14px 0; letter-spacing: 1px;
+        }
+        
+        .summary-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 10px; margin: 14px 0; }
+        .summary-card { 
+            background: linear-gradient(135deg, #F8FAFC, #F1F5F9); 
+            border: 2px solid #E2E8F0; border-radius: 10px; padding: 12px; text-align: center; 
+        }
+        .summary-card h4 { font-size: 7pt; color: #64748B; text-transform: uppercase; letter-spacing: 1px; font-weight: 600; }
+        .summary-card .val { font-size: 15pt; font-weight: 900; color: #0F172A; margin-top: 4px; }
+        
+        table { width: 100%; border-collapse: collapse; font-size: 9pt; margin: 10px 0; }
+        th { 
+            background: #1E6A8F !important; color: white !important; 
+            padding: 10px 6px; font-size: 7.5pt; text-transform: uppercase; 
+            font-weight: 700; letter-spacing: 0.5px; text-align: center; 
+        }
+        td { 
+            padding: 8px 6px; border-bottom: 1px solid #CBD5E1; 
+            text-align: center; font-weight: 500; 
+        }
+        tr:nth-child(even) td { background: #F8FAFC; }
+        td:first-child, th:first-child { text-align: left; font-weight: 600; }
+        .amount { text-align: right !important; font-family: 'Consolas', monospace; font-weight: 700; }
+        .status-badge { padding: 3px 8px; border-radius: 10px; font-size: 7pt; font-weight: 700; display: inline-block; }
+        
+        .footer {
+            margin-top: 20px; padding-top: 10px; border-top: 2px solid #CBD5E1;
+            display: flex; justify-content: space-between; font-size: 8pt; color: #64748B; font-weight: 500;
+        }
+        .signature-line { width: 160px; border-bottom: 1px solid #475569; margin-top: 25px; }
+        
+        .text-danger { color: #DC2626 !important; }
+        .text-success { color: #059669 !important; }
+        .text-primary { color: #1E6A8F !important; }
+        
+        @media print {
+    body { 
+        padding: 0.3cm !important; 
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+    @page { size: A4 landscape; margin: 0.6cm; }
+    .watermark { opacity: 0.03 !important; }
+    th { background: #1E6A8F !important; color: white !important; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+    tr:nth-child(even) td { background: #F8FAFC !important; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+    .summary-card { background: linear-gradient(135deg, #F8FAFC, #F1F5F9) !important; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+    .report-title { background: linear-gradient(135deg, #1E6A8F, #0A2B3E) !important; color: white !important; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+}
+    </style>
+</head>
+<body>
+    <div class="watermark">FINAL SALARY</div>
+    
+    <div class="header">
+        <div>
+            <h1>${companyInfo.name}</h1>
+            <div class="sub">${companyInfo.address1}, ${companyInfo.city}</div>
+            <div class="sub">📞 ${companyInfo.phone} &nbsp;|&nbsp; ✉️ ${companyInfo.email}</div>
+        </div>
+        <div class="info">
+            <strong>NTN:</strong> ${companyInfo.ntn}<br>
+            <strong>Date:</strong> ${dateStr}<br>
+            <strong>Time:</strong> ${timeStr}
+        </div>
+    </div>
+    
+    <div class="report-title">💰 FINAL SALARY REPORT</div>
+    
+    <div class="summary-grid">
+        <div class="summary-card"><h4>Employees</h4><div class="val">${totalEmp}</div></div>
+        <div class="summary-card"><h4>Total Gross</h4><div class="val" style="font-size:12pt;">PKR ${formatNumber(totalGross)}</div></div>
+        <div class="summary-card"><h4>Deductions</h4><div class="val text-danger" style="font-size:12pt;">-PKR ${formatNumber(totalDeductions)}</div></div>
+        <div class="summary-card"><h4>Additions</h4><div class="val text-success" style="font-size:12pt;">+PKR ${formatNumber(totalAdditions)}</div></div>
+        <div class="summary-card"><h4>Net Payable</h4><div class="val text-primary" style="font-size:12pt;">PKR ${formatNumber(totalNet)}</div></div>
+        <div class="summary-card"><h4>Avg Attend.</h4><div class="val">${avgAttendance.toFixed(1)}%</div></div>
+    </div>
+    
+    ${tbl.outerHTML}
+    
+    <div class="footer">
+        <div>
+            <strong>Generated by:</strong> ${currentUser?.username || 'System'}<br>
+            PCM Enterprise Intelligence Suite
+        </div>
+        <div style="text-align: center;">
+            <div class="signature-line"></div>
+            <strong style="font-size:9pt;">${companyInfo.authName}</strong><br>
+            <span style="font-size:8pt;">${companyInfo.authDesignation}</span>
+        </div>
+        <div style="text-align: right;">
+            <strong>Page:</strong> 1 of 1<br>
+            ${dateStr}
+        </div>
+    
+        
+    <div class="no-print" style="position:fixed;top:15px;right:15px;z-index:9999;display:flex;gap:10px;">
+        <button onclick="window.print()" style="padding:12px 30px;background:linear-gradient(135deg,#1E6A8F,#0A2B3E);color:white;border:none;border-radius:10px;font-size:13pt;font-weight:700;cursor:pointer;box-shadow:0 4px 15px rgba(0,0,0,0.3);">🖨️ Print Now</button>
+        <button onclick="window.close()" style="padding:12px 24px;background:white;color:#475569;border:2px solid #CBD5E1;border-radius:10px;font-size:13pt;font-weight:600;cursor:pointer;">✕ Close</button>
+    </div>
+
+</body>
+</html>`;
+    printWindow.document.write(content); printWindow.document.close();
+    addAuditLog(currentUser.username, 'Print', 'Printed final salary report');
+    }
     function printFinalSalaryDirect() { printFinalSalaryReport(); }
     
     function getDateRangeFromData() {
@@ -5235,100 +5652,139 @@ let hasUnsavedChanges2 = false;
 let lastSaveTime2 = null;
 let autoSaveTimer = null;
 let countdownTimer = null;
+// ==================== AUTO-SAVE TOGGLE ====================
+let autoSaveEnabled = true;
 
-function initStorageTab2() {
-    loadStorageSettings2();
-    refreshMonthList2();
-    updateStorageStatus2();
-    startCountdown();
+function toggleAutoSave() {
+    autoSaveEnabled = !autoSaveEnabled;
+    let btn = document.getElementById('autoSaveToggleBtn');
+    let status = document.getElementById('autoSaveStatusText');
+    
+    if (autoSaveEnabled) {
+        btn.style.background = 'linear-gradient(135deg, var(--danger-500), #C0392B)';
+        btn.innerHTML = '<i class="fas fa-power-off"></i> Turn Off';
+        status.innerHTML = '● Active';
+        status.style.color = 'var(--success-500)';
+        startAutoSave();
+    } else {
+        btn.style.background = 'linear-gradient(135deg, var(--success-500), #1D6F42)';
+        btn.innerHTML = '<i class="fas fa-power-off"></i> Turn On';
+        status.innerHTML = '○ Inactive';
+        status.style.color = 'var(--danger-500)';
+        stopAutoSave();
+    }
 }
 
-function loadStorageSettings2() {
-    let saved = localStorage.getItem('pcm_storage_settings2');
-    if (saved) {
-        storageSettings2 = JSON.parse(saved);
-        if (document.getElementById('autoSaveEnabled2')) {
-            document.getElementById('autoSaveEnabled2').checked = storageSettings2.autoSave;
-            document.getElementById('monthWiseFolders2').checked = storageSettings2.monthWiseFolders;
-            document.getElementById('storageFolderPath2').value = storageSettings2.folderPath;
+// ==================== MULTI-SHEET EXCEL EXPORT ====================
+function exportMultiSheetExcel() {
+    showLoading('Exporting', 'Creating multi-sheet Excel workbook...');
+    
+    setTimeout(() => {
+        let monthYear = new Date().toISOString().slice(0, 7);
+        let dateStr = new Date().toLocaleDateString('en-PK', { year: 'numeric', month: 'long', day: 'numeric' });
+        
+        let html = `<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>PCM Complete Data - ${monthYear}</title>
+    <style>
+        body { font-family: 'Segoe UI', Arial, sans-serif; margin: 0; padding: 0; background: white; }
+        .sheet-header {
+            background: linear-gradient(135deg, #1E6A8F, #0A2B3E); color: white;
+            padding: 12px 20px; font-size: 14pt; font-weight: 900;
+            margin-bottom: 15px; border-radius: 8px;
         }
-    }
+        table { width: 100%; border-collapse: collapse; font-size: 10pt; margin: 10px 0; }
+        th { background: #1E6A8F !important; color: white !important; padding: 8px 6px; font-size: 8pt; text-transform: uppercase; text-align: center; }
+        td { padding: 6px; border-bottom: 1px solid #E2E8F0; text-align: center; }
+        tr:nth-child(even) td { background: #F8FAFC; }
+        .amount { text-align: right; font-family: 'Consolas', monospace; font-weight: 600; }
+        .status-badge { padding: 2px 8px; border-radius: 10px; font-size: 7pt; font-weight: 700; display: inline-block; }
+        .status-present { background: #D1FAE5; color: #065F46; }
+        .status-absent { background: #FEE2E2; color: #991B1B; }
+        .status-ambiguous { background: #FEF3C7; color: #92400E; }
+        .sheet-break { page-break-before: always; }
+        .summary-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin: 10px 0; }
+        .summary-card { background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 8px; padding: 10px; text-align: center; }
+        .summary-card h4 { font-size: 7pt; color: #64748B; text-transform: uppercase; margin: 0 0 4px; }
+        .summary-card .val { font-size: 14pt; font-weight: 900; color: #0F172A; }
+        .company-info { display: flex; justify-content: space-between; padding: 15px; border-bottom: 2px solid #1E6A8F; margin-bottom: 15px; }
+        .company-info h2 { font-size: 16pt; color: #0A2B3E; margin: 0; }
+    </style>
+</head>
+<body>
+
+<div class="company-info">
+    <div>
+        <h2>${companyInfo.name}</h2>
+        <p style="margin:2px 0;font-size:8pt;color:#64748B;">${companyInfo.address1}, ${companyInfo.city}</p>
+        <p style="margin:2px 0;font-size:8pt;color:#64748B;">📞 ${companyInfo.phone} | ✉️ ${companyInfo.email}</p>
+    </div>
+    <div style="text-align:right;font-size:8pt;">
+        <strong>NTN:</strong> ${companyInfo.ntn}<br>
+        <strong>Date:</strong> ${dateStr}<br>
+        <strong>Period:</strong> ${monthYear}
+    </div>
+</div>
+
+<!-- ============ SHEET 1: EXECUTIVE DASHBOARD ============ -->
+<div class="sheet-header">📊 EXECUTIVE DASHBOARD</div>
+${generateExecutiveDashboardHTML()}
+
+<!-- ============ SHEET 2: PAYROLL REGISTER ============ -->
+<div class="sheet-break"></div>
+<div class="sheet-header">💰 PAYROLL REGISTER</div>
+${document.getElementById('salaryTable')?.cloneNode(true).outerHTML || '<p>No payroll data</p>'}
+
+<!-- ============ SHEET 3: ATTENDANCE LOG ============ -->
+<div class="sheet-break"></div>
+<div class="sheet-header">📅 ATTENDANCE LOG</div>
+${document.getElementById('attendanceTable')?.cloneNode(true).outerHTML || '<p>No attendance data</p>'}
+
+<!-- ============ SHEET 4: EXCEPTIONS ============ -->
+<div class="sheet-break"></div>
+<div class="sheet-header">⚠️ EXCEPTIONS REPORT</div>
+${generateExceptionsReportHTML()}
+
+<!-- ============ SHEET 5: FINAL SALARY ============ -->
+<div class="sheet-break"></div>
+<div class="sheet-header">💵 FINAL SALARY REPORT</div>
+${document.getElementById('finalSalaryTable')?.cloneNode(true).outerHTML || '<p>No final salary data</p>'}
+
+<!-- ============ SHEET 6: COMPANY SETTINGS ============ -->
+<div class="sheet-break"></div>
+<div class="sheet-header">🏢 COMPANY SETTINGS</div>
+${generateCompanySettingsHTML()}
+
+<!-- ============ SHEET 7: USER MANAGEMENT ============ -->
+<div class="sheet-break"></div>
+<div class="sheet-header">👥 USER MANAGEMENT</div>
+${document.getElementById('userTable')?.cloneNode(true).outerHTML || '<p>No user data</p>'}
+
+<!-- ============ SHEET 8: AUDIT TRAIL ============ -->
+<div class="sheet-break"></div>
+<div class="sheet-header">📝 AUDIT TRAIL</div>
+${document.getElementById('auditTable')?.cloneNode(true).outerHTML || '<p>No audit data</p>'}
+
+</body>
+</html>`;
+
+        let blob = new Blob([html], { type: 'application/vnd.ms-excel' });
+        let a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = `PCM_Complete_Data_${monthYear}.xls`;
+        a.click();
+        URL.revokeObjectURL(a.href);
+        
+        hideLoading();
+        showSuccessMessage('✅ Complete workbook exported with 8 sheets!');
+        addAuditLog(currentUser?.username || 'System', 'Export', 'Exported multi-sheet workbook');
+    }, 500);
 }
 
-function saveStorageSettings2() {
-    storageSettings2 = {
-        folderPath: document.getElementById('storageFolderPath2').value,
-        autoSave: document.getElementById('autoSaveEnabled2').checked,
-        monthWiseFolders: document.getElementById('monthWiseFolders2').checked
-    };
-    localStorage.setItem('pcm_storage_settings2', JSON.stringify(storageSettings2));
-    showMessage('Settings saved', 'success');
-    document.getElementById('advancedStorageSettings').style.display = 'none';
-}
-
-function updateStorageStatus2() {
-    let empEl = document.getElementById('storedEmployees2');
-    let attEl = document.getElementById('storedAttendance2');
-    let timeEl = document.getElementById('lastSavedTime2');
-    let badge = document.getElementById('storageStatusBadge2');
-    
-    if (empEl) empEl.innerText = Object.keys(salaryData).length || 0;
-    if (attEl) attEl.innerText = attendanceData.length || 0;
-    if (timeEl && lastSaveTime2) {
-        timeEl.innerText = lastSaveTime2.toLocaleTimeString();
-    }
-    
-    if (badge) {
-        if (hasUnsavedChanges2) {
-            badge.style.background = '#FFF8E7';
-            badge.style.color = '#B85C00';
-            badge.innerHTML = '<i class="fas fa-save"></i> Unsaved Changes';
-        } else if (lastSaveTime2) {
-            badge.style.background = '#E8F8F0';
-            badge.style.color = '#0E6B3E';
-            badge.innerHTML = '<i class="fas fa-check-circle"></i> All Data Saved';
-        } else {
-            badge.style.background = '#E6F3FA';
-            badge.style.color = '#1E6A8F';
-            badge.innerHTML = '<i class="fas fa-check-circle"></i> Ready';
-        }
-    }
-}
-
-function startCountdown() {
-    if (countdownTimer) clearInterval(countdownTimer);
-    let seconds = 5;
-    let countdownEl = document.getElementById('autoSaveCountdown');
-    
-    countdownTimer = setInterval(() => {
-        if (hasUnsavedChanges2) {
-            if (countdownEl) countdownEl.innerText = `Saving in ${seconds}s...`;
-            seconds--;
-            if (seconds < 0) seconds = 5;
-        } else {
-            if (countdownEl) countdownEl.innerText = 'All changes saved';
-        }
-    }, 1000);
-}
-
-function markUnsavedChanges2() {
-    hasUnsavedChanges2 = true;
-    updateStorageStatus2();
-    
-    if (storageSettings2.autoSave) {
-        if (autoSaveTimer) clearTimeout(autoSaveTimer);
-        autoSaveTimer = setTimeout(() => {
-            if (hasUnsavedChanges2) {
-                autoSaveToLocalStorage();
-                hasUnsavedChanges2 = false;
-                lastSaveTime2 = new Date();
-                updateStorageStatus2();
-            }
-        }, 5000);
-    }
-}
-
-function autoSaveToLocalStorage() {
+// ==================== JSON BACKUP EXPORT ====================
+function exportJSONBackup() {
     let dataPackage = {
         timestamp: new Date().toISOString(),
         monthYear: new Date().toISOString().slice(0, 7),
@@ -5339,93 +5795,129 @@ function autoSaveToLocalStorage() {
         attendanceData: attendanceData,
         processedData: processedData,
         exceptions: exceptions,
-        workingDaysOverrides: workingDaysOverrides
+        workingDaysOverrides: workingDaysOverrides,
+        users: users,
+        auditLogs: auditLogs
     };
-    localStorage.setItem('pcm_autosave_backup', JSON.stringify(dataPackage));
-    console.log('Auto-saved to localStorage');
+    
+    let json = JSON.stringify(dataPackage, null, 2);
+    let blob = new Blob([json], { type: 'application/json' });
+    let a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = `PCM_Backup_${new Date().toISOString().slice(0,10)}.json`;
+    a.click();
+    
+    showMessage('✅ JSON backup exported successfully!', 'success');
+    addAuditLog(currentUser?.username || 'System', 'Backup', 'Exported JSON backup');
 }
 
-function refreshMonthList2() {
-    let select = document.getElementById('monthSelector2');
-    if (!select) return;
-    select.innerHTML = '<option value="">-- Select Month --</option>';
-    let now = new Date();
-    for (let i = 0; i < 12; i++) {
-        let d = new Date(now.getFullYear(), now.getMonth() - i, 1);
-        let value = d.toISOString().slice(0, 7);
-        let label = d.toLocaleDateString('en-PK', { year: 'numeric', month: 'long' });
-        let option = document.createElement('option');
-        option.value = value;
-        option.textContent = label;
-        select.appendChild(option);
-    }
-}
-
-function loadSelectedMonthData() {
+// ==================== LOAD BACKUP ====================
+function loadBackupData() {
     let input = document.createElement('input');
     input.type = 'file';
-    input.accept = '.json,.xls,.xlsx';
+    input.accept = '.json';
     input.onchange = function(e) {
         let file = e.target.files[0];
         if (!file) return;
         
-        if (file.name.endsWith('.json')) {
-            let reader = new FileReader();
-            reader.onload = function(event) {
-                try {
-                    let data = JSON.parse(event.target.result);
-                    importDataPackage2(data);
-                } catch (error) {
-                    showMessage('Error loading file', 'warning');
-                }
-            };
-            reader.readAsText(file);
-        } else {
-            showMessage('Please select a JSON backup file', 'info');
-        }
+        showLoading('Loading Backup', 'Restoring data...');
+        
+        let reader = new FileReader();
+        reader.onload = function(event) {
+            try {
+                let data = JSON.parse(event.target.result);
+                
+                if (data.companyInfo) { companyInfo = data.companyInfo; localStorage.setItem('pcm_company_info', JSON.stringify(companyInfo)); updateHeaderWithCompanyInfo(); }
+                if (data.workingDaysPerMonth) { workingDaysPerMonth = data.workingDaysPerMonth; localStorage.setItem('pcm_working_days', workingDaysPerMonth); }
+                if (data.config) config = data.config;
+                if (data.salaryData) salaryData = data.salaryData;
+                if (data.attendanceData) attendanceData = data.attendanceData;
+                if (data.processedData) processedData = data.processedData;
+                if (data.exceptions) exceptions = data.exceptions;
+                if (data.workingDaysOverrides) workingDaysOverrides = data.workingDaysOverrides;
+                if (data.users) { users = data.users; saveUsers(); }
+                if (data.auditLogs) { auditLogs = data.auditLogs; saveAudit(); }
+                
+                renderAttendance(); renderExceptions(); calculateSalaries(); updateGlobalStats(); updateAllCharts(); updateExecutiveDashboard();
+                updateStorageStatus2();
+                
+                hideLoading();
+                showSuccessMessage('✅ Data restored successfully!');
+                addAuditLog(currentUser?.username || 'System', 'Restore', 'Loaded backup data');
+            } catch (error) {
+                hideLoading();
+                showMessage('❌ Error loading file: ' + error.message, 'warning');
+            }
+        };
+        reader.readAsText(file);
     };
     input.click();
 }
 
-function importDataPackage2(data) {
-    if (data.companyInfo) { companyInfo = data.companyInfo; localStorage.setItem('pcm_company_info', JSON.stringify(companyInfo)); updateHeaderWithCompanyInfo(); }
-    if (data.workingDaysPerMonth) { workingDaysPerMonth = data.workingDaysPerMonth; localStorage.setItem('pcm_working_days', workingDaysPerMonth); }
-    if (data.config) config = data.config;
-    if (data.salaryData) salaryData = data.salaryData;
-    if (data.attendanceData) attendanceData = data.attendanceData;
-    if (data.processedData) processedData = data.processedData;
-    if (data.exceptions) exceptions = data.exceptions;
-    if (data.workingDaysOverrides) workingDaysOverrides = data.workingDaysOverrides;
+// ==================== STORAGE STATUS ====================
+function updateStorageStatus2() {
+    let empEl = document.getElementById('storedEmployees2');
+    let attEl = document.getElementById('storedAttendance2');
+    let timeEl = document.getElementById('lastSavedTime2');
+    let badge = document.getElementById('storageStatusBadge2');
     
-    renderAttendance(); renderExceptions(); calculateSalaries(); updateGlobalStats(); updateAllCharts(); updateExecutiveDashboard();
-    hasUnsavedChanges2 = false; updateStorageStatus2();
-    showMessage('Data loaded successfully', 'success');
-    addAuditLog(currentUser?.username || 'System', 'Data Load', 'Loaded backup data');
+    if (empEl) empEl.innerText = Object.keys(salaryData).length || 0;
+    if (attEl) attEl.innerText = attendanceData.length || 0;
+    if (timeEl) timeEl.innerText = new Date().toLocaleTimeString();
+    
+    if (badge) {
+        if (Object.keys(salaryData).length > 0) {
+            badge.style.background = '#E8F8F0';
+            badge.style.color = '#0E6B3E';
+            badge.innerHTML = '<i class="fas fa-check-circle"></i> Data Loaded';
+        } else {
+            badge.style.background = '#E6F3FA';
+            badge.style.color = '#1E6A8F';
+            badge.innerHTML = '<i class="fas fa-circle"></i> Ready';
+        }
+    }
 }
 
-// Override functions for auto-save
-let originalProcessAllData3 = processAllData;
-processAllData = function() { originalProcessAllData3(); markUnsavedChanges2(); };
+// ==================== AUTO-SAVE SYSTEM ====================
+let autoSaveInterval = null;
 
-let originalCalculateSalaries4 = calculateSalaries;
-calculateSalaries = function() { originalCalculateSalaries4(); markUnsavedChanges2(); };
+function startAutoSave() {
+    if (autoSaveInterval) clearInterval(autoSaveInterval);
+    autoSaveInterval = setInterval(() => {
+        if (autoSaveEnabled && Object.keys(salaryData).length > 0) {
+            let dataPackage = {
+                timestamp: new Date().toISOString(),
+                companyInfo: companyInfo,
+                workingDaysPerMonth: workingDaysPerMonth,
+                config: config,
+                salaryData: salaryData,
+                attendanceData: attendanceData,
+                processedData: processedData,
+                exceptions: exceptions
+            };
+            localStorage.setItem('pcm_autosave_backup', JSON.stringify(dataPackage));
+            document.getElementById('lastSavedTime2').innerText = new Date().toLocaleTimeString();
+        }
+    }, 5000);
+}
 
-// Update switchTab for storage
-let originalSwitchTab5 = window.switchTab;
-window.switchTab = function(id) {
-    if (originalSwitchTab5) originalSwitchTab5(id);
-    if (id === 'storage') setTimeout(() => initStorageTab2(), 100);
-};
+function stopAutoSave() {
+    if (autoSaveInterval) {
+        clearInterval(autoSaveInterval);
+        autoSaveInterval = null;
+    }
+}
+
+function initStorageTab2() {
+    updateStorageStatus2();
+    if (autoSaveEnabled) startAutoSave();
+}
 
 // Initialize
 setTimeout(() => { 
-    loadStorageSettings2(); 
-    refreshMonthList2(); 
     updateStorageStatus2(); 
-    startCountdown();
+    if (autoSaveEnabled) startAutoSave();
 }, 1500);
-    
-    loadWorkingDays();
     loadCompanyInfoFromStorage();
 </script>
 </body>
