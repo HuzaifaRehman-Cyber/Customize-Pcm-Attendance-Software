@@ -10,6 +10,9 @@
     <style>
 
 .no-print { display: flex !important; }
+@media print {
+    .no-print { display: none !important; }
+}
         * { margin: 0; padding: 0; box-sizing: border-box; }
         :root {
             --primary-900: #0A2B3E; --primary-800: #144B66; --primary-700: #1E6A8F;
@@ -264,14 +267,19 @@
             <div style="display: flex; justify-content: space-between; align-items: flex-start;">
                 <div>
                     <div class="header-badge"><i class="fas fa-chart-line"></i><span>Real-time Intelligence Platform</span></div>
-                    <div class="header-title"><i class="fas fa-bolt"></i><h1>PCM Electrical Systems</h1></div>
+                    <div class="header-title">
+    <img id="headerLogo" src="" alt="Logo" style="height: 50px; max-width: 120px; object-fit: contain; display: none; margin-right: 10px;">
+    <i class="fas fa-bolt" id="headerIcon"></i>
+    <h1>PCM Electrical Systems</h1>
+</div>
                     <div class="header-subtitle">Enterprise Attendance Intelligence & Payroll Management Suite</div>
                 </div>
                 <div class="user-menu" id="userMenu">
-                    <i class="fas fa-user-circle" style="font-size: 2rem;"></i>
-                    <span id="currentUserDisplay">Loading...</span>
-                    <button class="btn-modern" style="background: rgba(255,255,255,0.2); color: white; padding: 8px 16px;" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</button>
-                </div>
+    <img id="headerProfilePhoto" src="" alt="User" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover; display: none; border: 2px solid white; cursor: pointer;" onclick="showProfile()">
+    <i class="fas fa-user-circle" id="headerProfileIcon" style="font-size: 2rem;"></i>
+    <span id="currentUserDisplay">Loading...</span>
+    <button class="btn-modern" style="background: rgba(255,255,255,0.2); color: white; padding: 8px 16px;" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</button>
+</div>
             </div>
         </div>
     </div>
@@ -1822,6 +1830,14 @@ function savePermissions() {
         document.getElementById('loginOverlay').style.display = 'none';
         document.getElementById('mainApp').style.display = 'block';
         document.getElementById('currentUserDisplay').innerHTML = `<i class="fas fa-user"></i> ${user.username} (${user.roleLabel || 'User'})`;
+
+let headerPhoto = document.getElementById('headerProfilePhoto');
+        let headerIcon = document.getElementById('headerProfileIcon');
+        if (user.profilePhoto) {
+            headerPhoto.src = user.profilePhoto;
+            headerPhoto.style.display = 'inline-block';
+            headerIcon.style.display = 'none';
+        }
         
         if(hasPermission('user_administration', 'view')) {
             document.getElementById('adminTabBtn').style.display = 'flex';
@@ -1877,6 +1893,13 @@ function savePermissions() {
                 document.getElementById('loginOverlay').style.display = 'none';
                 document.getElementById('mainApp').style.display = 'block';
                 document.getElementById('currentUserDisplay').innerHTML = `<i class="fas fa-user"></i> ${user.username} (${user.roleLabel || 'User'})`;
+ let headerPhoto = document.getElementById('headerProfilePhoto');
+                let headerIcon = document.getElementById('headerProfileIcon');
+                if (user.profilePhoto) {
+                    headerPhoto.src = user.profilePhoto;
+                    headerPhoto.style.display = 'inline-block';
+                    headerIcon.style.display = 'none';
+                }
                 if(hasPermission('user_administration', 'view')) document.getElementById('adminTabBtn').style.display = 'flex';
                 applyUIPermissions();
                 startSessionTimer();
@@ -2690,7 +2713,8 @@ function performTabSwitch(id, module) {
             emp, gross, totalReq, totalWorked, totalLate, totalEarly, totalOT,
             absentDays, presentDays, ambiguousDays,
             lateDeduct, earlyDeduct, absentDeduct, otPaid, encashment, netPayable,
-            attendancePercent: (presentDays + absentDays) > 0 ? (presentDays / (presentDays + absentDays) * 100) : 0
+            attendancePercent: (presentDays + absentDays) > 0 ? (presentDays / (presentDays + absentDays) * 100) : 0,
+         hasPendingExceptions: false
         };
     }
     
@@ -2800,11 +2824,22 @@ function performTabSwitch(id, module) {
     }
     
     function updateHeaderWithCompanyInfo() {
-        let headerTitle = document.querySelector('.header-title h1');
-        if (headerTitle && companyInfo.name) {
-            headerTitle.innerHTML = companyInfo.name;
-        }
+    let headerTitle = document.querySelector('.header-title h1');
+    if (headerTitle && companyInfo.name) {
+        headerTitle.innerHTML = companyInfo.name;
     }
+    
+    let headerLogo = document.getElementById('headerLogo');
+    let headerIcon = document.getElementById('headerIcon');
+    if (headerLogo && companyInfo.logo) {
+        headerLogo.src = companyInfo.logo;
+        headerLogo.style.display = 'inline-block';
+        if (headerIcon) headerIcon.style.display = 'none';
+    } else if (headerIcon) {
+        headerIcon.style.display = 'inline-block';
+        if (headerLogo) headerLogo.style.display = 'none';
+    }
+}
     
     function getCompanyPrintHeader() {
         return `
@@ -2855,24 +2890,40 @@ function performTabSwitch(id, module) {
     }
     
     function approveException(type, emp, date) {
-        let key = `${type}_${emp}_${date}`;
-        approvedExceptions[key] = true;
-        localStorage.setItem('pcm_approved_exceptions', JSON.stringify(approvedExceptions));
-        updateApprovalStatusDisplay(type, emp, date);
+    let key;
+    if (type === 'encashment') {
+        key = `encashment_${emp}`;
+    } else {
+        key = `${type}_${emp}_${date}`;
     }
+    approvedExceptions[key] = true;
+    localStorage.setItem('pcm_approved_exceptions', JSON.stringify(approvedExceptions));
+    updateApprovalStatusDisplay(type, emp, date);
+}
     
-    function updateApprovalStatusDisplay(type, emp, date) {
-        let statusSpan = document.getElementById(`status_${type}_${emp}_${date}`);
-        if (statusSpan) {
-            if (isExceptionApproved(type, emp, date)) {
-                statusSpan.className = 'status-badge status-present';
-                statusSpan.innerHTML = '✓ Approved';
-            } else {
-                statusSpan.className = 'status-badge status-pending';
-                statusSpan.innerHTML = 'Pending';
-            }
+   function updateApprovalStatusDisplay(type, emp, date) {
+    let statusSpan;
+    if (type === 'encashment') {
+        statusSpan = document.getElementById(`status_encashment_${emp}`);
+    } else {
+        statusSpan = document.getElementById(`status_${type}_${emp}_${date}`);
+    }
+    if (statusSpan) {
+        let isApproved;
+        if (type === 'encashment') {
+            isApproved = approvedExceptions[`encashment_${emp}`] === true;
+        } else {
+            isApproved = approvedExceptions[`${type}_${emp}_${date}`] === true;
+        }
+        if (isApproved) {
+            statusSpan.className = 'status-badge status-present';
+            statusSpan.innerHTML = '✓ Approved';
+        } else {
+            statusSpan.className = 'status-badge status-pending';
+            statusSpan.innerHTML = 'Pending';
         }
     }
+}
     
     function updateAllApprovalStatuses(type) {
         if (type === 'absent') {
@@ -2892,16 +2943,20 @@ function performTabSwitch(id, module) {
                 Object.keys(exceptions.overtime[emp]).forEach(date => updateApprovalStatusDisplay('overtime', emp, date));
             });
         } else if (type === 'encashment') {
-            Object.keys(salaryData).forEach(emp => {
-                let statusSpan = document.getElementById(`status_encashment_${emp}`);
-                if (statusSpan) {
-                    if (approvedExceptions[`encashment_${emp}`]) {
-                        statusSpan.className = 'status-badge status-present';
-                        statusSpan.innerHTML = '✓ Approved';
-                    }
-                }
-            });
+    Object.keys(salaryData).forEach(emp => {
+        let statusSpan = document.getElementById(`status_encashment_${emp}`);
+        if (statusSpan) {
+            let encashKey = `encashment_${emp}`;
+            if (approvedExceptions[encashKey] === true) {
+                statusSpan.className = 'status-badge status-present';
+                statusSpan.innerHTML = '✓ Approved';
+            } else {
+                statusSpan.className = 'status-badge status-pending';
+                statusSpan.innerHTML = 'Pending';
+            }
         }
+    });
+}
     }
     
     function toggleSelectAll(type) {
@@ -3105,10 +3160,14 @@ function performUpdateOvertime(e, d) {
 function performUpdateEncashment(e) {
     showLoading('Processing', 'Updating encashment...');
     setTimeout(() => {
-        let amt=parseFloat(document.getElementById(`encash_${e}`)?.value)||0; 
+        let amt = parseFloat(document.getElementById(`encash_${e}`)?.value) || 0; 
         approveException('encashment', e, '');
-        exceptions.encashment[e]=amt; 
-        calculateSalaries(); updateAllCharts(); updateExecutiveDashboard(); 
+        exceptions.encashment[e] = amt; 
+        calculateSalaries(); 
+        updateAllCharts(); 
+        updateExecutiveDashboard(); 
+        updateAllApprovalStatuses('encashment');
+        renderExceptions();
         hideLoading();
         showSuccessMessage(`Encashment updated and approved`);
         addAuditLog(currentUser.username, 'Exception Approved', `Approved encashment for ${e}`);
@@ -3325,7 +3384,10 @@ function performPrintPayroll() {
     <title>Payroll Report - ${companyInfo.name}</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        .no-print { display: flex !important; }
+.no-print { display: flex !important; }
+@media print {
+    .no-print { display: none !important; }
+}
         body { 
             font-family: 'Segoe UI', Arial, sans-serif; padding: 20px; background: white; 
             color: #1E293B; width: 100%;
@@ -3413,7 +3475,10 @@ function performPrintPayroll() {
     
     <div class="header">
         <div>
-            <h1>${companyInfo.name}</h1>
+            <div style="display: flex; align-items: center; gap: 12px;">
+    ${companyInfo.logo ? `<img src="${companyInfo.logo}" style="width: 50px; height: 50px; object-fit: contain;">` : '<div style="width:50px;height:50px;background:#1E6A8F;border-radius:10px;display:flex;align-items:center;justify-content:center;color:white;font-size:20pt;">⚡</div>'}
+    <h1>${companyInfo.name}</h1>
+</div>
             <div class="sub">${companyInfo.address1}, ${companyInfo.address2}, ${companyInfo.city}</div>
             <div class="sub">📞 ${companyInfo.phone} &nbsp;|&nbsp; ✉️ ${companyInfo.email} &nbsp;|&nbsp; 🌐 ${companyInfo.website}</div>
         </div>
@@ -3503,6 +3568,9 @@ function performPrintExecutive() {
     <style>
         
 .no-print { display: flex !important; }
+@media print {
+    .no-print { display: none !important; }
+}
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { 
             font-family: 'Segoe UI', Arial, sans-serif; padding: 20px; background: white; 
@@ -3579,7 +3647,10 @@ function performPrintExecutive() {
     
     <div class="header">
         <div>
-            <h1>${companyInfo.name}</h1>
+            <div style="display: flex; align-items: center; gap: 12px;">
+    ${companyInfo.logo ? `<img src="${companyInfo.logo}" style="width: 50px; height: 50px; object-fit: contain;">` : '<div style="width:50px;height:50px;background:#1E6A8F;border-radius:10px;display:flex;align-items:center;justify-content:center;color:white;font-size:20pt;">⚡</div>'}
+    <h1>${companyInfo.name}</h1>
+</div>
             <div class="sub">${companyInfo.address1}, ${companyInfo.city}</div>
         </div>
         <div class="info">
@@ -3656,6 +3727,9 @@ function performPrintExecutive() {
     <style>
 
 .no-print { display: flex !important; }
+@media print {
+    .no-print { display: none !important; }
+}
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { 
             font-family: 'Segoe UI', Arial, sans-serif; padding: 20px; background: white; 
@@ -3737,7 +3811,10 @@ function performPrintExecutive() {
     
     <div class="header">
         <div>
-            <h1>${companyInfo.name}</h1>
+            <div style="display: flex; align-items: center; gap: 12px;">
+    ${companyInfo.logo ? `<img src="${companyInfo.logo}" style="width: 50px; height: 50px; object-fit: contain;">` : '<div style="width:50px;height:50px;background:#1E6A8F;border-radius:10px;display:flex;align-items:center;justify-content:center;color:white;font-size:20pt;">⚡</div>'}
+    <h1>${companyInfo.name}</h1>
+</div>
             <div class="sub">${companyInfo.address1}, ${companyInfo.city}</div>
             <div class="sub">📞 ${companyInfo.phone} &nbsp;|&nbsp; ✉️ ${companyInfo.email}</div>
         </div>
@@ -4237,10 +4314,26 @@ function resetAllFileSelections() {
             let details = calculateEmployeeSalaryDetails(emp);
             totalPay += details.netPayable;
             
-            let statusBadge = '';
-            if(details.ambiguousDays > 0) statusBadge = `<span class="status-badge status-ambiguous"><i class="fas fa-exclamation-triangle"></i> ${details.ambiguousDays} Ambiguous</span>`;
-            else if(details.absentDays > 0) statusBadge = `<span class="status-badge status-absent"><i class="fas fa-calendar-times"></i> ${details.absentDays} Absent</span>`;
-            else statusBadge = `<span class="status-badge status-present"><i class="fas fa-check-circle"></i> Clean</span>`;
+                        let statusBadge = '';
+            // Check pending exceptions
+            let hasPending = false;
+            if (processedData[emp]) {
+                Object.keys(processedData[emp]).forEach(d => {
+                    if (processedData[emp][d].status === 'Absent' && !approvedExceptions[`absent_${emp}_${d}`]) hasPending = true;
+                    if (processedData[emp][d].status === 'Ambiguous' && !approvedExceptions[`ambiguous_${emp}_${d}`]) hasPending = true;
+                });
+            }
+            if (exceptions.encashment[emp] && !approvedExceptions[`encashment_${emp}`]) hasPending = true;
+
+            if (hasPending) {
+                statusBadge = `<span class="status-badge status-ambiguous">⚠️ Pending Approval</span>`;
+            } else if (details.ambiguousDays > 0) {
+                statusBadge = `<span class="status-badge status-ambiguous"><i class="fas fa-exclamation-triangle"></i> ${details.ambiguousDays} Ambiguous</span>`;
+            } else if (details.absentDays > 0) {
+                statusBadge = `<span class="status-badge status-absent"><i class="fas fa-calendar-times"></i> ${details.absentDays} Absent</span>`;
+            } else {
+                statusBadge = `<span class="status-badge status-present"><i class="fas fa-check-circle"></i> ✅ All Clean</span>`;
+            }
             
             let row=tbody.insertRow(); 
 row.insertCell(0).innerText=emp; 
@@ -4831,13 +4924,17 @@ function showSuccessMessage(message) {
     }
     
     function markUnsavedChanges() {
-        hasUnsavedChanges = true;
-        updateStorageStatus();
-        if (storageSettings.autoSave) {
-            clearTimeout(window.autoSaveTimeout);
-            window.autoSaveTimeout = setTimeout(() => { if (hasUnsavedChanges) saveAllDataToFiles(); }, 5000);
-        }
+    hasUnsavedChanges = true;
+    updateStorageStatus();
+    if (storageSettings.autoSave) {
+        clearTimeout(window.autoSaveTimeout);
+        window.autoSaveTimeout = setTimeout(() => { 
+            if (hasUnsavedChanges && storageSettings.autoSave) {
+                saveAllDataToFiles(); 
+            }
+        }, 5000);
     }
+}
     
     function refreshMonthList() {
         let select = document.getElementById('monthSelector');
@@ -4869,21 +4966,26 @@ function showSuccessMessage(message) {
     }
     
     // Override functions for auto-save
-    let originalProcessAllData2 = processAllData;
-    processAllData = function() { originalProcessAllData2(); markUnsavedChanges(); };
-    
-    let originalCalculateSalaries3 = calculateSalaries;
-    calculateSalaries = function() { originalCalculateSalaries3(); markUnsavedChanges(); };
-    
-    // Update switchTab for storage
-    let originalSwitchTab4 = window.switchTab;
-    window.switchTab = function(id) {
-        if (originalSwitchTab4) originalSwitchTab4(id);
-        if (id === 'storage') setTimeout(() => initStorageTab(), 100);
-    };
-    
-    setTimeout(() => { loadStorageSettings(); refreshMonthList(); }, 1500);
+let originalProcessAllData2 = processAllData;
+processAllData = function() { 
+    originalProcessAllData2(); 
+    if (storageSettings.autoSave) markUnsavedChanges(); 
+};
 
+let originalCalculateSalaries3 = calculateSalaries;
+calculateSalaries = function() { 
+    originalCalculateSalaries3(); 
+    if (storageSettings.autoSave) markUnsavedChanges(); 
+};
+
+// Update switchTab for storage
+let originalSwitchTab4 = window.switchTab;
+window.switchTab = function(id) {
+    if (originalSwitchTab4) originalSwitchTab4(id);
+    if (id === 'storage') setTimeout(() => initStorageTab(), 100);
+};
+
+setTimeout(() => { loadStorageSettings(); refreshMonthList(); }, 1500);
 // ==================== COMPLETE EXCEL WORKBOOK EXPORT (MULTIPLE SHEETS) ====================
 
 function exportCompleteWorkbook() {
@@ -5191,7 +5293,10 @@ function performCompleteWorkbookExport() {
 <!-- ============================================ -->
 <div class="company-header">
     <div>
-        <h1>${companyInfo.name}</h1>
+        <div style="display: flex; align-items: center; gap: 12px;">
+    ${companyInfo.logo ? `<img src="${companyInfo.logo}" style="width: 50px; height: 50px; object-fit: contain;">` : '<div style="width:50px;height:50px;background:#1E6A8F;border-radius:10px;display:flex;align-items:center;justify-content:center;color:white;font-size:20pt;">⚡</div>'}
+    <h1>${companyInfo.name}</h1>
+</div>
         <p>${companyInfo.address1}, ${companyInfo.address2}, ${companyInfo.city}</p>
         <p>📞 ${companyInfo.phone} | ✉️ ${companyInfo.email} | 🌐 ${companyInfo.website}</p>
     </div>
@@ -5657,6 +5762,8 @@ let autoSaveEnabled = true;
 
 function toggleAutoSave() {
     autoSaveEnabled = !autoSaveEnabled;
+    localStorage.setItem('pcm_autosave_enabled', autoSaveEnabled);
+    
     let btn = document.getElementById('autoSaveToggleBtn');
     let status = document.getElementById('autoSaveStatusText');
     
@@ -5910,6 +6017,22 @@ function stopAutoSave() {
 
 function initStorageTab2() {
     updateStorageStatus2();
+
+    let savedAutoSave = localStorage.getItem('pcm_autosave_enabled');  // ← ADD
+    if (savedAutoSave !== null) {                                       // ← ADD
+        autoSaveEnabled = savedAutoSave === 'true';                     // ← ADD
+        if (!autoSaveEnabled) {                                         // ← ADD
+            let btn = document.getElementById('autoSaveToggleBtn');     // ← ADD
+            let status = document.getElementById('autoSaveStatusText'); // ← ADD
+            if (btn && status) {                                        // ← ADD
+                btn.style.background = 'linear-gradient(135deg, var(--success-500), #1D6F42)'; // ← ADD
+                btn.innerHTML = '<i class="fas fa-power-off"></i> Turn On';  // ← ADD
+                status.innerHTML = '○ Inactive';                       // ← ADD
+                status.style.color = 'var(--danger-500)';               // ← ADD
+            }                                                           // ← ADD
+        }                                                               // ← ADD
+    }   
+
     if (autoSaveEnabled) startAutoSave();
 }
 
