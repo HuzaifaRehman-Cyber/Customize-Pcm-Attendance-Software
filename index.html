@@ -1068,7 +1068,105 @@
         </div>
     </div>
 </div>
-
+<!-- Edit User Form Modal -->
+<div id="editUserModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); backdrop-filter: blur(5px); z-index: 1007; align-items: center; justify-content: center;">
+    <div style="background: white; border-radius: 28px; padding: 0; max-width: 600px; width: 90%; max-height: 90vh; overflow-y: auto; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);">
+        
+        <!-- Modal Header -->
+        <div style="padding: 24px 30px; border-bottom: 1px solid var(--gray-200); display: flex; align-items: center; justify-content: space-between; background: linear-gradient(135deg, #1E6A8F, #0A2B3E);">
+            <div style="display: flex; align-items: center; gap: 12px;">
+                <div style="width: 48px; height: 48px; background: rgba(255,255,255,0.15); border-radius: 16px; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.5rem;">
+                    <i class="fas fa-user-edit"></i>
+                </div>
+                <div>
+                    <h2 style="font-size: 1.3rem; font-weight: 700; color: white; margin: 0;">Edit User</h2>
+                    <p style="font-size: 0.75rem; color: rgba(255,255,255,0.8); margin: 2px 0 0;">Update user account details</p>
+                </div>
+            </div>
+            <button onclick="closeEditUserModal()" style="background: rgba(255,255,255,0.15); border: none; font-size: 1.3rem; color: white; cursor: pointer; padding: 8px 12px; border-radius: 12px;">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        
+        <!-- Modal Body -->
+        <div style="padding: 30px;">
+            <div id="editUserMessage"></div>
+            
+            <div style="text-align: center; margin-bottom: 24px;">
+                <div style="position: relative; display: inline-block;">
+                    <img id="editUserProfilePreview" src="https://ui-avatars.com/api/?name=User&size=100&background=1E6A8F&color=fff&bold=true" style="width: 100px; height: 100px; border-radius: 50%; object-fit: cover; border: 4px solid white; box-shadow: var(--shadow-md);">
+                    <button onclick="document.getElementById('editUserPhotoUpload').click()" style="position: absolute; bottom: 0; right: 0; width: 36px; height: 36px; background: var(--primary-600); border: none; border-radius: 12px; color: white; cursor: pointer;">
+                        <i class="fas fa-camera"></i>
+                    </button>
+                </div>
+                <input type="file" id="editUserPhotoUpload" accept="image/*" style="display: none;" onchange="previewEditUserPhoto()">
+                <input type="hidden" id="editUserId">
+            </div>
+            
+            <div style="display: grid; gap: 18px;">
+                <div>
+                    <label style="display: block; font-size: 0.8rem; font-weight: 600; color: var(--gray-700); margin-bottom: 6px;">
+                        <i class="fas fa-user" style="margin-right: 6px;"></i>Full Name
+                    </label>
+                    <input type="text" id="editUserFullName" placeholder="Full Name" style="width: 100%; padding: 12px 16px; border-radius: 14px; border: 1.5px solid var(--gray-300); font-size: 0.9rem;">
+                </div>
+                <div>
+                    <label style="display: block; font-size: 0.8rem; font-weight: 600; color: var(--gray-700); margin-bottom: 6px;">
+                        <i class="fas fa-at" style="margin-right: 6px;"></i>Username
+                    </label>
+                    <input type="text" id="editUserUsername" placeholder="Username" style="width: 100%; padding: 12px 16px; border-radius: 14px; border: 1.5px solid var(--gray-300); font-size: 0.9rem;">
+                </div>
+                <div>
+                    <label style="display: block; font-size: 0.8rem; font-weight: 600; color: var(--gray-700); margin-bottom: 6px;">
+                        <i class="fas fa-envelope" style="margin-right: 6px;"></i>Email
+                    </label>
+                    <input type="email" id="editUserEmail" placeholder="Email" style="width: 100%; padding: 12px 16px; border-radius: 14px; border: 1.5px solid var(--gray-300); font-size: 0.9rem;">
+                </div>
+                <div>
+                    <label style="display: block; font-size: 0.8rem; font-weight: 600; color: var(--gray-700); margin-bottom: 6px;">
+                        <i class="fas fa-tag" style="margin-right: 6px;"></i>Role Label
+                    </label>
+                    <select id="editUserRole" style="width: 100%; padding: 12px 16px; border-radius: 14px; border: 1.5px solid var(--gray-300); font-size: 0.9rem;">
+                        <option value="Staff">Staff</option>
+                        <option value="Manager">Manager</option>
+                        <option value="HR Manager">HR Manager</option>
+                        <option value="Accountant">Accountant</option>
+                        <option value="Administrator">Administrator</option>
+                    </select>
+                </div>
+                <div>
+                    <label style="display: block; font-size: 0.8rem; font-weight: 600; color: var(--gray-700); margin-bottom: 6px;">
+                        <i class="fas fa-building" style="margin-right: 6px;"></i>Department
+                    </label>
+                    <select id="editUserDepartment" style="width: 100%; padding: 12px 16px; border-radius: 14px; border: 1.5px solid var(--gray-300); font-size: 0.9rem;">
+                        <option value="Electrical">Electrical</option>
+                        <option value="Mechanical">Mechanical</option>
+                        <option value="Administration">Administration</option>
+                        <option value="HR">Human Resources</option>
+                        <option value="Finance">Finance</option>
+                        <option value="Operations">Operations</option>
+                    </select>
+                </div>
+                <div>
+                    <label style="display: block; font-size: 0.8rem; font-weight: 600; color: var(--gray-700); margin-bottom: 6px;">
+                        <i class="fas fa-phone" style="margin-right: 6px;"></i>Phone
+                    </label>
+                    <input type="tel" id="editUserPhone" placeholder="Phone" style="width: 100%; padding: 12px 16px; border-radius: 14px; border: 1.5px solid var(--gray-300); font-size: 0.9rem;">
+                </div>
+            </div>
+        </div>
+        
+        <!-- Modal Footer -->
+        <div style="padding: 20px 30px; border-top: 1px solid var(--gray-200); display: flex; gap: 12px; justify-content: flex-end; background: var(--gray-50);">
+            <button onclick="closeEditUserModal()" style="padding: 12px 24px; background: white; border: 1.5px solid var(--gray-300); border-radius: 14px; font-weight: 600; font-size: 0.85rem; color: var(--gray-700); cursor: pointer;">
+                <i class="fas fa-times"></i> Cancel
+            </button>
+            <button onclick="saveEditUser()" style="padding: 12px 28px; background: linear-gradient(135deg, var(--primary-600), var(--primary-700)); border: none; border-radius: 14px; font-weight: 600; font-size: 0.85rem; color: white; cursor: pointer;">
+                <i class="fas fa-save"></i> Update User
+            </button>
+        </div>
+    </div>
+</div>
 <!-- Security Verification Modal -->
 <div id="securityVerificationModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); backdrop-filter: blur(8px); z-index: 1004; align-items: center; justify-content: center;">
     <div class="security-modal-content">
@@ -2318,22 +2416,88 @@ function saveNewUser() {
     newUserPhotoData = null;
 }
     
-    function editUser(userId) {
-        if (!hasPermission('user_administration', 'edit')) {
-            alert('Access denied. You do not have permission to edit users.');
-            return;
-        }
-        
-        let user = users.find(u => u.id === userId);
-        if(!user) return;
-        let newLabel = prompt('Enter new role label:', user.roleLabel || 'User');
-        if(newLabel) {
-            user.roleLabel = newLabel;
-            saveUsers();
-            addAuditLog(currentUser.username, 'User Edit', `Changed ${user.username} label to ${newLabel}`);
-        }
-        loadUsers();
+    let editUserPhotoData = null;
+
+function editUser(userId) {
+    if (!hasPermission('user_administration', 'edit')) {
+        alert('Access denied. You do not have permission to edit users.');
+        return;
     }
+    
+    let user = users.find(u => u.id === userId);
+    if (!user) return;
+    
+    // Fill form
+    document.getElementById('editUserId').value = user.id;
+    document.getElementById('editUserFullName').value = user.fullName || '';
+    document.getElementById('editUserUsername').value = user.username || '';
+    document.getElementById('editUserEmail').value = user.email || '';
+    document.getElementById('editUserRole').value = user.roleLabel || 'Staff';
+    document.getElementById('editUserDepartment').value = user.department || 'Electrical';
+    document.getElementById('editUserPhone').value = user.phone || '';
+    
+    if (user.profilePhoto) {
+        document.getElementById('editUserProfilePreview').src = user.profilePhoto;
+        editUserPhotoData = user.profilePhoto;
+    } else {
+        document.getElementById('editUserProfilePreview').src = 'https://ui-avatars.com/api/?name=' + encodeURIComponent(user.username) + '&size=100&background=1E6A8F&color=fff&bold=true';
+        editUserPhotoData = null;
+    }
+    
+    document.getElementById('editUserMessage').innerHTML = '';
+    document.getElementById('editUserModal').style.display = 'flex';
+}
+
+function closeEditUserModal() {
+    document.getElementById('editUserModal').style.display = 'none';
+    editUserPhotoData = null;
+}
+
+function previewEditUserPhoto() {
+    let file = document.getElementById('editUserPhotoUpload').files[0];
+    if (file) {
+        let reader = new FileReader();
+        reader.onload = function(e) {
+            document.getElementById('editUserProfilePreview').src = e.target.result;
+            editUserPhotoData = e.target.result;
+        };
+        reader.readAsDataURL(file);
+    }
+}
+
+function saveEditUser() {
+    let userId = document.getElementById('editUserId').value;
+    let userIndex = users.findIndex(u => u.id === userId);
+    if (userIndex === -1) return;
+    
+    let msgDiv = document.getElementById('editUserMessage');
+    let newUsername = document.getElementById('editUserUsername').value.trim();
+    
+    if (!newUsername || newUsername.length < 3) {
+        msgDiv.innerHTML = '<div class="alert alert-warning"><i class="fas fa-exclamation-triangle"></i> Username must be at least 3 characters</div>';
+        return;
+    }
+    
+    let existingUser = users.find(u => u.username === newUsername && u.id !== userId);
+    if (existingUser) {
+        msgDiv.innerHTML = '<div class="alert alert-warning"><i class="fas fa-exclamation-triangle"></i> Username already exists</div>';
+        return;
+    }
+    
+    users[userIndex].fullName = document.getElementById('editUserFullName').value.trim();
+    users[userIndex].username = newUsername;
+    users[userIndex].email = document.getElementById('editUserEmail').value.trim();
+    users[userIndex].roleLabel = document.getElementById('editUserRole').value;
+    users[userIndex].department = document.getElementById('editUserDepartment').value;
+    users[userIndex].phone = document.getElementById('editUserPhone').value.trim();
+    if (editUserPhotoData) users[userIndex].profilePhoto = editUserPhotoData;
+    
+    saveUsers();
+    addAuditLog(currentUser.username, 'User Edit', `Updated user: ${newUsername}`);
+    closeEditUserModal();
+    loadUsers();
+    showMessage('✅ User updated successfully!', 'success');
+}
     
     function toggleUserStatus(userId) {
         if (!hasPermission('user_administration', 'edit')) {
